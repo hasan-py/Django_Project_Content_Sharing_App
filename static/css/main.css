@@ -1,0 +1,13 @@
+.body {
+	color:red;
+}
+
+
+.alink {
+	color:blue;
+}
+
+.alink:hover {
+	text-decoration:none;
+	color:green;
+}

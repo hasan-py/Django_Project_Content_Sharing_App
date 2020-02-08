@@ -3,8 +3,9 @@
 <head>
 	{% load static %}
 	<title>Django Blog</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 </head>
-<body>
+<body class="body">
 
 <!-- Navber -->
 
@@ -25,13 +26,13 @@
 {% if user.is_authenticated %}
 
 <p>Hi {{ user.username }}!</p>
-<p><a href="{% url 'logout' %}">Log out</a></p>
+<p><a class="alink" href="{% url 'logout' %}">Log out</a></p>
 
 
 {% else %}
 <p>You are not logged in.</p>
-<a href="{% url 'login' %}">Log In</a> |
-<a href="{% url 'signup' %}">Signup</a>
+<a class="alink" href="{% url 'login' %}">Log In</a> |
+<a class="alink" href="{% url 'signup' %}">Signup</a>
 {% endif %}
 
 </div>
@@ -47,10 +48,10 @@
 <footer class="text-muted text-center">
 	<div class="container">
 		<p class="float-right">
-			<a href="/">Back to top</a>
+			<a class="alink" href="/">Back to top</a>
 		</p>
 		<hr>
-		<p>&copy; Django Blog 2020 <br> Design by | <a href="https://facebook.com/404error.py">HASAN</a> </p>
+		<p>&copy; Django Blog 2020 <br> Design by | <a class="alink" href="https://facebook.com/404error.py">HASAN</a> </p>
 		
 	</div>
 </footer>
