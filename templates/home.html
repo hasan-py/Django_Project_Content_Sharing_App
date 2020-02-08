@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<h3 class="text-center">All Post</h3>
+<hr>
+
+{% for post in object_list %}
+<div class="card shadow m-5">
+	<h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+	<p>Posted by {{ post.author }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
