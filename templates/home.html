@@ -7,7 +7,7 @@
 <hr>
 
 {% for post in object_list %}
-<div class="card shadow m-5">
+<div class="card bg-dark shadow p-3 m-5">
 	<h2><a class="alink" href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
 	<p>Posted by {{ post.author }}</p>
 </div>

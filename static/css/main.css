@@ -1,13 +1,14 @@
 .body {
-	color:red;
+	background-image:url("https://www.xmple.com/wallpaper/triangle-azure-1920x1080-c2-6b8a99-66a4c1-l2-280-1120-a-330-f-10.svg");
+	color:white;
 }
 
 
 .alink {
-	color:blue;
+	color:white;
 }
 
 .alink:hover {
 	text-decoration:none;
-	color:green;
+	color:red;
 }

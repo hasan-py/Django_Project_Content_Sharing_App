@@ -4,10 +4,12 @@
 	{% load static %}
 	<title>Django Blog</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYV5cY22hqzG3w3iswRzTd6_BvqKaGjRvbmAtJNLemDgyu8PTC" type="image/gif" sizes="16x16">
 </head>
 <body class="body">
 
 <!-- Navber -->
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">Django Blog</a>
@@ -21,6 +23,7 @@
 		</div>
 	</div>
 </nav>
+
 
 <div class="container p-3">
 {% if user.is_authenticated %}
