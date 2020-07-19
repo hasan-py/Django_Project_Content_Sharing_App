@@ -1,1 +1,2 @@
-from .auth import authMiddlware
+from .auth import loginCheck
+from .auth import logoutCheck
