@@ -2,11 +2,11 @@ from django.shortcuts import render,redirect
 
 def loginCheck(get_response):
 
-	def middleware(request):
+	def middleware(request,**arg):
 		if not request.session.get('id'):
 			return redirect('login')
 
-		return get_response(request)
+		return get_response(request,**arg)
 
 	return middleware
 

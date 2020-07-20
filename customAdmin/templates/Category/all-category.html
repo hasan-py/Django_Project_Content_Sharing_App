@@ -21,6 +21,20 @@ Django CMS | Categories
         </div>
         {% endfor %}
         {% endif %}
+        <div class="col-md-6 mt-3">
+            <form method="POST" action="{% url 'allCategory' %}">
+                {% csrf_token %}
+              <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input name="categoryName" type="text" class="form-control" id="categoryName" placeholder="Enter name">
+              </div>
+              <div class="form-group">
+                <label for="categoryDiscription">Description</label>
+                <textarea class="form-control" name="categoryDiscription" id="categoryDiscription" cols="10" rows="3" placeholder="Discription here..." ></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Add Category</button>
+            </form>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -38,12 +52,12 @@ Django CMS | Categories
                         <tr>
                             <td>{{ category.name }}</td>
                             <td>{{ category.description|truncatechars:10 }} ...
-                                <a href="{% url 'allCategory' %}?view={{ category.id }}" type="button" class="btn btn-info"> <i class="fas fa-eye"></i></a>
+                                <a href="{% url 'allCategoryById' cat_id=category.id %}" type="button" class="btn btn-info"> <i class="fas fa-eye"></i></a>
                             </td>
                             <td>{{ category.created_at }}</td>
                             <td>{{ category.updated_at }}</td>
                             <td>
-                                <a href="{% url 'allCategory' %}?view={{ category.id }}" type="button" class="btn btn-success"> <i class="fas fa-edit"></i></a>
+                                <a href="{% url 'allCategoryById' cat_id=category.id %}" type="button" class="btn btn-success"> <i class="fas fa-edit"></i></a>
                                 <a href="{% url 'allCategory' %}?delete={{ category.id }}" type="button" class="btn btn-danger"> <i class="fas fa-trash"></i></a>
                             </td>
                         </tr>

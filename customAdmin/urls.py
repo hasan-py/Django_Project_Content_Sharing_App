@@ -24,6 +24,6 @@ urlpatterns = [
 
     # Category
     path('categories', loginCheck(AllCategory.as_view()), name="allCategory"),
-    path('categories/<int:cat_id>', loginCheck(AllCategory.viewCategory), name="allCategory"),
+    path('categories/<int:cat_id>/', loginCheck(AllCategory.updateCategory), name="allCategoryById"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

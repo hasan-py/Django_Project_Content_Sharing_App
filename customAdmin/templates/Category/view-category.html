@@ -5,8 +5,36 @@ Django CMS | View Category
 {% endblock %}
 {% block content %}
 
-<div class="container-fluid">
-  {{ category.name }}
+<div class="container-fluid mb-3">
+  <div class="card mb-5">
+  <div class="card-header bg-success border-0 text-light">
+    Category
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ category.name }}</h5>
+    <p class="card-text">{{ category.description }}</p>
+  </div>
+  <div class="card-footer text-muted">
+    <span class="float-left">Created at {{ category.created_at }}</span>
+    <span class="float-right">Last update on {{ category.updated_at }}</span>
+  </div>
+</div>
+<h3>Edit Category</h3>
+<hr>
+<form method="POST" action="{% url 'allCategoryById' cat_id=category.id %}">
+	{% csrf_token %}
+  <div class="form-group">
+    <label for="categoryName">Category Name</label>
+    <input name="categoryName" type="text" value="{{ category.name }}" class="form-control" id="categoryName" placeholder="Enter name">
+  </div>
+  <div class="form-group">
+    <label for="categoryDiscription">Description</label>
+    <textarea class="form-control" name="categoryDiscription" id="categoryDiscription" cols="20" rows="5" placeholder="Discription here..." >{{ category.description }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
 </div>
 
 {% endblock %}
