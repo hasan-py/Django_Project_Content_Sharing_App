@@ -16,7 +16,7 @@ class Register(View):
 
 		if len(error)>0:
 			return render(request,"Auth/register.html",{"error":error,"oldData":registerDetails})
-		if All_user.emailExits(registerDetails["email"]):
+		if All_user.emailExist(registerDetails["email"]):
 			error.append("Email already exits")
 			print(error)
 			return render(request,"Auth/register.html",{"error":error,"oldData":registerDetails})

@@ -14,7 +14,7 @@ class All_user(models.Model):
 		return self.name
 
 	@staticmethod
-	def emailExits(userEmail):
+	def emailExist(userEmail):
 		try:
 			email = All_user.objects.get(email=userEmail)
 			return email

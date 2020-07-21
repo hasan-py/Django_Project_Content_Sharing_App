@@ -56,50 +56,24 @@ Django CMS | Dashboard
         SUBSCRIBER & BLOGER
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - SUBSCRIBER & BLOGER -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
+        <a class="nav-link" href="{% url 'allCategory' %}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Categories</span>
-        </a>
-        <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">CATEGORIES</h6>
-            <a class="collapse-item" href="{% url 'allCategory' %}">All category</a>
-            <a class="collapse-item" href="{% url 'allCategory' %}">Add category</a>
-          </div>
-        </div>
+          <span>Categories</span></a>
       </li>
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link" href="{% url 'allPost' %}">
           <i class="fas fa-fw fa-blog"></i>
-          <span>Posts</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">POSTS</h6>
-            <a class="collapse-item" href="buttons.html">All post</a>
-            <a class="collapse-item" href="buttons.html">Add post</a>
-          </div>
-        </div>
+          <span>Posts</span></a>
       </li>
 
-      <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link" href="{% url 'allPost' %}">
           <i class="fas fa-fw fa-comment"></i>
-          <span>Comments</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">COMMMENT</h6>
-            <a class="collapse-item" href="buttons.html">All comment</a>
-            <a class="collapse-item" href="buttons.html">Add comment</a>
-          </div>
-        </div>
+          <span>Comments</span></a>
       </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -366,8 +340,7 @@ Django CMS | Dashboard
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
+        <div class="modal-body">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
         </div>

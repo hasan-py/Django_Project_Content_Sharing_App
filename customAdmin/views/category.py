@@ -35,7 +35,6 @@ class AllCategory(View):
 
 	# Edit and detail view Category
 	def updateCategory(request,cat_id):
-
 		if request.method == "POST":
 			editCategory = Category.objects.get(id=cat_id)
 

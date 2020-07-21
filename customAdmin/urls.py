@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 # Views
 from .views import Dashboard,Login,Register,Logout
-from .views import AllCategory
+from .views import AllCategory,AllPost
 
 # Middlewares
 from .middlewares import loginCheck,logoutCheck
@@ -25,5 +25,10 @@ urlpatterns = [
     # Category
     path('categories', loginCheck(AllCategory.as_view()), name="allCategory"),
     path('categories/<int:cat_id>/', loginCheck(AllCategory.updateCategory), name="allCategoryById"),
+
+    # Post
+    path('posts', loginCheck(AllPost.as_view()), name="allPost"),
+    path('posts/<int:post_id>/', loginCheck(AllPost.updatePost), name="allPostById"),
+    
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,7 +12,7 @@ class Login(View):
 
 	def post(self,request):
 		loginData = request.POST
-		userEmail = All_user.emailExits(loginData["email"])
+		userEmail = All_user.emailExist(loginData["email"])
 		if userEmail:
 			if check_password(loginData["password"],userEmail.password):
 				request.session["id"] = userEmail.id
