@@ -36,9 +36,6 @@ Django CMS | View Post
                 <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#exampleModalCenter">
                   <i class="fas fa-edit"></i> Edit Post
                 </button>
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#coverChangeModal">
-                  <i class="fas fa-edit"></i> Edit Cover Image
-                </button>
             </div>
             <hr>
             <h3 class="card-title">{{ post.title }} <span class="badge badge-danger">{{post.category }}</span> </h3>
@@ -64,7 +61,7 @@ Django CMS | View Post
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{% url 'allPostById' post_id=post.id %}">
+                <form method="POST" action="{% url 'allPostById' post_id=post.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="postTitle">Post Title</label>
@@ -90,34 +87,13 @@ Django CMS | View Post
                           {% endfor %}
                         </select>
                     <div>
-                    <button type="submit" class="btn btn-warning mt-3">Update Post</button>
-                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal 2 -->
-<div class="modal fade" id="coverChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-warning text-light">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Cover Image</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{% url 'allPostById' post_id=post.id %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                     <img class="image-fluid mb-3" height="160px" width="200" src="{{ post.image.url }}" alt="{{ post.title }}">
+                     <img class="image-fluid my-3" height="160px" width="200" src="{{ post.image.url }}" alt="{{ post.title }}">
                     <div class="form-group">
                         <label for="postImage">Cover Image</label>
-                        <input required name="postImage" type="file" class="form-control" id="postImage">
+                        <input name="postImage" type="file" class="form-control" id="postImage">
                     </div>
-                    <button type="submit" class="btn btn-warning">Update Cover Image</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning mt-3">Update Post</button>
+                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
                 </form>
             </div>
         </div>

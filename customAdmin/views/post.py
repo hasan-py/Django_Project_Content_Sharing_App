@@ -26,6 +26,7 @@ class AllPost(View):
 
 	# Add Post
 	def post(self,request):
+
 		postData = request.POST
 		newPost = Post(
 				title = postData["postTitle"],
@@ -34,6 +35,7 @@ class AllPost(View):
 				category = Category.objects.get(id=postData["postCategory"]),
 				image = request.FILES.get('postImage'),
 				user_id = postData["postUser"],
+				# user_id = request.session.get('id'),
 				updated_at = timezone.localtime(timezone.now())
 			)
 		newPost.save()
@@ -52,28 +54,25 @@ class AllPost(View):
 	# Edit and detail view Post
 	def updatePost(request,post_id):
 		if request.method == "POST":
+			editPost = Post.objects.get(id=post_id)
 			# Image Change Logic
 			if request.FILES.get('postImage'):
-				editPost = Post.objects.get(id=post_id)
 				oldFIle = Path(os.getcwd()+"/customAdmin/"+f"{editPost.image}")
 				editPost.image = request.FILES.get('postImage')
 				editPost.updated_at = timezone.localtime(timezone.now())
-				editPost.save()
 				os.remove(oldFIle)
-				messages.success(request,"Cover image updated successfully. ")
-				return redirect('allPostById',post_id)
 			# Without Image
-			else:
-				editPost = Post.objects.get(id=post_id)
+			if not request.FILES.get('postImage') or request.FILES.get('postImage'):
 				editPost.title = request.POST.get('postTitle')
 				editPost.slug = request.POST.get('postSlug')
 				editPost.body = request.POST.get('postBody')
 				# Creating Category Intance by Category Id | Because forienKey must need an object
 				editPost.category = Category.objects.get(id=request.POST.get('postCategory'))
 				editPost.updated_at = timezone.localtime(timezone.now())
-				editPost.save()
-				messages.success(request,f"{request.POST.get('postTitle')} updated successfully. ")
-				return redirect('allPostById',post_id)
+
+			editPost.save()
+			messages.success(request,f"({request.POST.get('postTitle')}) updated successfully. ")
+			return redirect('allPostById',post_id)
 
 		post = Post.objects.get(id=post_id)
 		allCategory = Category.objects.all()
