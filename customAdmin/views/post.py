@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.utils import timezone
 from customAdmin.models import Post
 from customAdmin.models import Category
+from customAdmin.models import All_user
 
 
 class AllPost(View):
@@ -18,18 +19,26 @@ class AllPost(View):
 			self.deletePost(request,request.GET.get('delete'))
 
 		allPost = Post.objects.all()
-		return render(request,"Post/all-post.html",{"allPost":allPost})
+		allCategory = Category.objects.all()
+		allUser = All_user.objects.all()
+		context = {"allPost":allPost,"allCategory":allCategory,"allUser":allUser}
+		return render(request,"Post/all-post.html",context)
 
-	# # Add Post
-	# def post(self,request):
-	# 	newCategory = Category(
-	# 			name = request.POST.get('categoryName'),
-	# 			description = request.POST.get('categoryDiscription'),
-	# 			updated_at = timezone.localtime(timezone.now())
-	# 		)
-	# 	newCategory.save()
-	# 	messages.success(request, f"{request.POST.get('categoryName')} added successfully. ")
-	# 	return redirect('allCategory')
+	# Add Post
+	def post(self,request):
+		postData = request.POST
+		newPost = Post(
+				title = postData["postTitle"],
+				slug = postData["postSlug"],
+				body = postData["postBody"],
+				category = Category.objects.get(id=postData["postCategory"]),
+				image = request.FILES.get('postImage'),
+				user_id = postData["postUser"],
+				updated_at = timezone.localtime(timezone.now())
+			)
+		newPost.save()
+		messages.success(request, "Post Published successfully. ")
+		return redirect('allPost')
 
 	# Delete Post
 	def deletePost(self,request,post_id):
@@ -59,6 +68,8 @@ class AllPost(View):
 				editPost.title = request.POST.get('postTitle')
 				editPost.slug = request.POST.get('postSlug')
 				editPost.body = request.POST.get('postBody')
+				# Creating Category Intance by Category Id | Because forienKey must need an object
+				editPost.category = Category.objects.get(id=request.POST.get('postCategory'))
 				editPost.updated_at = timezone.localtime(timezone.now())
 				editPost.save()
 				messages.success(request,f"{request.POST.get('postTitle')} updated successfully. ")
@@ -66,10 +77,4 @@ class AllPost(View):
 
 		post = Post.objects.get(id=post_id)
 		allCategory = Category.objects.all()
-		options = ""
-		for category in allCategory:
-			if str(category.name) == str(post.category):
-				options = options+f"<option value='{category.name}' selected>{category.name}</option>"
-			options = options+f"<option value='{category.name}'>{category.name}</option>"
-
-		return render(request,"Post/view-post.html",{"post":post,"allCategory":allCategory,"options":options})
+		return render(request,"Post/view-post.html",{"post":post,"allCategory":allCategory})

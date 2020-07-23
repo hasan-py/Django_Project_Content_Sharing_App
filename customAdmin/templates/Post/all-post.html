@@ -6,6 +6,9 @@ Django CMS | Posts
 {% block content %}
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <a type="button" class="btn btn-primary mb-3" href="{% url 'dashboard' %}">
+        < Back
+    </a>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header bg-warning py-3">
@@ -21,6 +24,11 @@ Django CMS | Posts
         </div>
         {% endfor %}
         {% endif %}
+        <div class="col-md-6 mt-3">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+                + Add Post
+            </button>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-responsive" width="100%" cellspacing="0">
@@ -70,4 +78,58 @@ Django CMS | Posts
         </div>
     </div>
 </div>
+
+<!-- Modal 1 -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-light">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'allPost' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="postTitle">Post Title</label>
+                        <input required value="{{ oldData.title }}" name="postTitle" type="text" class="form-control" id="postTitle" placeholder="Enter title">
+                    </div>
+                    <div class="form-group">
+                        <label for="postSlug">Post Slug</label>
+                        <input required value="{{ oldData.slug }}" name="postSlug" type="text" class="form-control" id="postSlug" placeholder="Enter slug">
+                    </div>
+                    <div class="form-group">
+                        <label for="postBody">Body</label>
+                        <textarea required class="form-control" name="postBody" id="postBody" cols="30" rows="5">{{ oldData.body }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postImage">Post Image</label>
+                        <input required name="postImage" type="file" class="form-control" id="postImage">
+                    </div>
+                    <div class="form-group">
+                      <label for="postCategory">Post Category</label>
+                        <select required class="form-control" name="postCategory" id="postCategory">
+                          {% for category in allCategory %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                          {% endfor %}
+                        </select>
+                    <div>
+                    <div class="form-group">
+                      <label for="postUser">Post User</label>
+                        <select required class="form-control" name="postUser" id="postUser">
+                          {% for user in allUser %}
+                            <option value="{{ user.id }}">{{ user.name }}</option>
+                          {% endfor %}
+                        </select>
+                    <div>
+                    <button type="submit" class="btn btn-warning mt-3">Submit Post</button>
+                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

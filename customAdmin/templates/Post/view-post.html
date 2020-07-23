@@ -4,8 +4,12 @@
 Django CMS | View Post
 {% endblock %}
 {% block content %}
+{% load custom %}
 
 <div class="container-fluid mb-3">
+    <a type="button" class="btn btn-primary mb-3" href="{% url 'allPost' %}">
+        < Back
+    </a>
     <div class="card mb-5 border-0 shadow">
         <div class="card-header bg-warning border-0 text-light">
             Post
@@ -32,7 +36,7 @@ Django CMS | View Post
                 <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#exampleModalCenter">
                   <i class="fas fa-edit"></i> Edit Post
                 </button>
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#exampleModalCenter2">
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#coverChangeModal">
                   <i class="fas fa-edit"></i> Edit Cover Image
                 </button>
             </div>
@@ -77,7 +81,13 @@ Django CMS | View Post
                     <div class="form-group">
                       <label for="postCategory">Post Category</label>
                         <select class="form-control" name="postCategory" id="postCategory">
-                          {{ options }}
+                          {% for category in allCategory %}
+                            {% if category|categorySelected:post.category %}
+                                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                            {% else %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endif %}
+                          {% endfor %}
                         </select>
                     <div>
                     <button type="submit" class="btn btn-warning mt-3">Update Post</button>
@@ -89,11 +99,11 @@ Django CMS | View Post
 </div>
 
 <!-- Modal 2 -->
-<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="coverChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-warning text-light">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Post</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Cover Image</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
