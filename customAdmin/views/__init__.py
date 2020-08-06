@@ -1,5 +1,6 @@
 #  Dashboard & Logout
 from .index import Dashboard
+from .index import Home
 from .Auth.login import Logout
 
 # Login & Register

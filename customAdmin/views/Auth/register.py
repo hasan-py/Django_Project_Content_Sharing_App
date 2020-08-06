@@ -25,7 +25,7 @@ class Register(View):
 				name=registerDetails["firstName"]+" "+registerDetails["lastName"],
 				email=registerDetails["email"],
 				password=make_password(registerDetails["password"]),
-				profile_pic="./img/user.png",
+				profile_pic="./upload/profile_pic/user.png",
 				role="admin",
 				updated_at = timezone.localtime(timezone.now())
 			)

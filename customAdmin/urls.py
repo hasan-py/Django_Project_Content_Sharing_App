@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Views
-from .views import Dashboard,Login,Register,Logout
+from .views import Dashboard,Login,Register,Logout,Home
 from .views import AllCategory,AllPost
 
 # Middlewares
@@ -20,6 +20,7 @@ urlpatterns = [
 
     # Dashboard & logout
     path('', loginCheck(Dashboard.as_view()), name="dashboard"),
+    path('home', loginCheck(Home.as_view()), name="home"),
     path('logout', loginCheck(Logout.as_view()), name="logout"),
 
     # Category

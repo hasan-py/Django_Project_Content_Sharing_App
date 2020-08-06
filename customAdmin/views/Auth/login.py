@@ -16,6 +16,7 @@ class Login(View):
 		if userEmail:
 			if check_password(loginData["password"],userEmail.password):
 				request.session["id"] = userEmail.id
+				request.session["name"] = userEmail.name
 				return redirect('dashboard')
 			else:
 				messages.warning(request, "Email or password doesn't match")

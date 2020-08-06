@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Home
+{% endblock %}
+{% block content %}
+    
+    <div class="container-fluid">    
+        <div class="row">    
+            <div class="col-md-4 mb-3">
+                <ul class="list-group">
+                  <li class="list-group-item active"><i class="fas fa-list"></i> Categories</li>
+                  <li class="list-group-item"> <a href="{% url 'home' %}">All Posts</a></li>
+                  {% for category in categories %}
+                  <li class="list-group-item"><a href="{% url 'home' %}?category={{ category.id }}">{{ category.name }}</a></li>
+                  {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                  {% if posts|length > 0 %}
+                    {% for post in posts %}
+                    <div class="col-md-12">
+                        <div class="card mb-3" style="max-width: 540px;">
+                          <div class="row no-gutters">
+                            <div class="col-md-4 m-3">
+                              <img src="{{ post.image.url }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.body|truncatechars:15 }} <a style="text-decoration:none" href="#">more</a>
+                                <br>
+                                Posted by <a href="#">{{ post.user }}</a>
+                                <br>
+                                <span class="badge badge-dark">#{{ post.category }}</span>
+                                <br>
+                                <span class="badge badge-danger">{{ post.like_total }} Likes</span>
+                                <span class="badge badge-success">{{ post.comment_total }} Comments</span>
+                                </p>
+                                <p class="card-text"><small class="text-muted">Published on {{ post.created_at }}</small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="col-md-12">
+                       <h3 class="text-center">No post found</h3> 
+                    </div>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>        
+
+
+{% endblock %}
