@@ -6,9 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.utils import timezone
-from customAdmin.models import Post
-from customAdmin.models import Category
-from customAdmin.models import All_user
+from customAdmin.models import Post,Category,All_user,Comment,Like
 
 
 class AllPost(View):
@@ -75,5 +73,14 @@ class AllPost(View):
 			return redirect('allPostById',post_id)
 
 		post = Post.objects.get(id=post_id)
+		allComment = Comment.objects.filter(post=post_id)
+		allLike = Like.objects.filter(post=post_id)
 		allCategory = Category.objects.all()
-		return render(request,"Post/view-post.html",{"post":post,"allCategory":allCategory})
+		
+		context = {
+			"post":post,
+			"allCategory":allCategory,
+			"allComment":allComment,
+			"allLike":allLike
+			}
+		return render(request,"Post/view-post.html",context)

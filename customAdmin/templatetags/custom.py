@@ -7,3 +7,12 @@ def categorySelected(category,cat_name):
 		return True
 	else:
 		return False
+
+@register.filter(name='countLC')
+def countLC(dict,id):
+	newList = []
+	for i in dict:
+		if i.post.id == id:
+			newList.append(i.post.id)
+	return len(newList)
+	

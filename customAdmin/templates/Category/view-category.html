@@ -6,13 +6,13 @@ Django CMS | View Category
 {% block content %}
 
 <div class="container-fluid mb-3">
-    <a type="button" class="btn btn-primary mb-3" href="{% url 'allCategory' %}">
-        < Back </a> <div class="card mb-5 border-0">
+    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
+        < Back
+    </button>
             <div class="card-header bg-success border-0 text-light">
-                Category
+                {{ category.name }}
             </div>
             <div class="card-body">
-                <h5 class="card-title">Name : {{ category.name }}</h5>
                 <p class="card-text">Description : {{ category.description }}</p>
             </div>
             <div class="card-footer text-light bg-success">

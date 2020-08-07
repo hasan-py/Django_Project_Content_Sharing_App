@@ -7,12 +7,12 @@ Django CMS | View Post
 {% load custom %}
 
 <div class="container-fluid mb-3">
-    <a type="button" class="btn btn-primary mb-3" href="{% url 'allPost' %}">
+    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
         < Back
-    </a>
+    </button>
     <div class="card mb-5 border-0 shadow">
         <div class="card-header bg-warning border-0 text-light">
-            Post
+           <h3>{{ post.title }} </h3> 
         </div>
         {% if messages %}
         {% for message in messages %}
@@ -28,24 +28,38 @@ Django CMS | View Post
             <img class="image-fluid mb-3" height="220px" width="280" src="{{ post.image.url }}" alt="{{ post.title }}">
             <div class="col-md-6 offset-md-3">
                 <button type="button" class="btn btn-dark mb-2">
-                    Likes <span class="badge badge-light">{{ post.like_total }}</span>
+                    Likes <span class="badge badge-light">{{ allLike|length }}</span>
                 </button>
                 <button type="button" class="btn btn-primary mb-2">
-                    Comments <span class="badge badge-light">{{ post.comment_total }}</span>
+                    Comments <span class="badge badge-light">{{ allComment|length }}</span>
                 </button>
                 <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#exampleModalCenter">
                   <i class="fas fa-edit"></i> Edit Post
                 </button>
             </div>
             <hr>
-            <h3 class="card-title">{{ post.title }} <span class="badge badge-danger">{{post.category }}</span> </h3>
+            <h5 class="card-title">Category <span class="badge badge-danger">{{post.category }}</span> </h5>
             <small 
             class="text-muted">Posted at {{ post.created_at }}</small>
             <p class="card-text"><strong>Body :</strong> {{ post.body }}</p>
         </div>
-        <div class="card-footer bg-warning text-light">
+        <div class="card-footer bg-light text-dark border-0">
             <span class="float-left">Posted at {{ post.created_at }}</span>
             <span class="float-right">Last update on {{ post.updated_at }}</span>
+        </div>
+         <div class="px-5 mt-5">
+            <h4>Comments</h4>
+            <hr>
+            {% for comment in allComment %}
+                <div class="card col-md-6 mb-3">
+                    <div class="card-title mt-3"><img style="border-radius:50%; height:50px; width:50px;" src="{{ comment.user.profile_pic.url }}" alt="profile_pic">  {{ comment.user.name }}
+                    </div>
+                        <p class="text-muted">{{ comment.body }}</p>
+                    <div class="card-footer bg-none border-0">
+                         <span class="float-right">{{ comment.created_at }}</span>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>

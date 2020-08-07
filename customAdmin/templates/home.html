@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom %}
 {% block title %}
 Django CMS | Home
 {% endblock %}
@@ -29,14 +30,14 @@ Django CMS | Home
                             <div class="col-md-6">
                               <div class="card-body">
                                 <h5 class="card-title">{{ post.title }}</h5>
-                                <p class="card-text">{{ post.body|truncatechars:15 }} <a style="text-decoration:none" href="#">more</a>
+                                <p class="card-text">{{ post.body|truncatechars:15 }} <a style="text-decoration:none" href="{% url 'allPostById' post_id=post.id %}">more</a>
                                 <br>
                                 Posted by <a href="#">{{ post.user }}</a>
                                 <br>
                                 <span class="badge badge-dark">#{{ post.category }}</span>
                                 <br>
-                                <span class="badge badge-danger">{{ post.like_total }} Likes</span>
-                                <span class="badge badge-success">{{ post.comment_total }} Comments</span>
+                                <span class="badge badge-danger">{{ likes|countLC:post.id }} Likes</span>
+                                <span class="badge badge-success">{{ comments|countLC:post.id }} Comments</span>
                                 </p>
                                 <p class="card-text"><small class="text-muted">Published on {{ post.created_at }}</small></p>
                               </div>

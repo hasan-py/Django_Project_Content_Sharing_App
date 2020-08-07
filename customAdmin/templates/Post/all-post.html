@@ -6,9 +6,9 @@ Django CMS | Posts
 {% block content %}
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <a type="button" class="btn btn-primary mb-3" href="{% url 'dashboard' %}">
+    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
         < Back
-    </a>
+    </button>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header bg-warning py-3">

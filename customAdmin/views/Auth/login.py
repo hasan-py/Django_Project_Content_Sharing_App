@@ -9,7 +9,6 @@ class Login(View):
 	def get(self,request):
 		return render(request,"Auth/login.html")
 
-
 	def post(self,request):
 		loginData = request.POST
 		userEmail = All_user.emailExist(loginData["email"])
@@ -17,6 +16,12 @@ class Login(View):
 			if check_password(loginData["password"],userEmail.password):
 				request.session["id"] = userEmail.id
 				request.session["name"] = userEmail.name
+				request.session["loggedInUser"] = {
+					"id":userEmail.id,
+					"name":userEmail.name,
+					"profile_pic":userEmail.profile_pic.url,
+					"role":userEmail.role
+				}
 				return redirect('dashboard')
 			else:
 				messages.warning(request, "Email or password doesn't match")
