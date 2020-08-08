@@ -18,8 +18,16 @@ class AllPost(View):
 
 		allPost = Post.objects.all()
 		allCategory = Category.objects.all()
+		allComment = Comment.objects.all()
+		allLike = Like.objects.all()
 		allUser = All_user.objects.all()
-		context = {"allPost":allPost,"allCategory":allCategory,"allUser":allUser}
+		context = {
+			"allPost":allPost,
+			"allCategory":allCategory,
+			"allUser":allUser,
+			"allLike":allLike,
+			"allComment":allComment
+		}
 		return render(request,"Post/all-post.html",context)
 
 	# Add Post

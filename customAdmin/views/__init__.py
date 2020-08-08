@@ -12,3 +12,9 @@ from .category import AllCategory
 
 # Posts
 from .post import AllPost
+
+# Comments
+from .comment import AllComment
+
+# Like
+from .like import AllLike

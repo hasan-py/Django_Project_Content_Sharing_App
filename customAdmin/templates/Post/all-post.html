@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom %}
 {% block title %}
 Django CMS | Posts
 {% endblock %}
@@ -57,8 +58,8 @@ Django CMS | Posts
                             <td>{{ post.user }}</td>
                             <td><img class="image-fluid mb-3" height="50px" width="50px" src="{{ post.image.url }}" alt="{{ post.title }}"></td>
                             <td>{{ post.body|truncatechars:10 }}</td>
-                            <td>{{ post.like_total }}</td>
-                            <td>{{ post.comment_total }}</td>
+                            <td>{{ allLike|countLC:post.id }}</td>
+                            <td>{{ allComment|countLC:post.id }}</td>
                             <td>{{ post.updated_at }}</td>
                             <td>{{ post.created_at }}</td>
                             <td>

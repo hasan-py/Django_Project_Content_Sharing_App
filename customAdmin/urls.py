@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 # Views
 from .views import Dashboard,Login,Register,Logout,Home
-from .views import AllCategory,AllPost
+from .views import AllCategory,AllPost,AllComment,AllLike
 
 # Middlewares
 from .middlewares import loginCheck,logoutCheck
@@ -30,6 +30,13 @@ urlpatterns = [
     # Post
     path('posts', loginCheck(AllPost.as_view()), name="allPost"),
     path('posts/<int:post_id>/', loginCheck(AllPost.updatePost), name="allPostById"),
+
+    # Comment
+    path('comment',loginCheck(AllComment.loggedInUserComment), name="loggedInUserComment"),
+    path('comment/delete/<int:post_id>/<int:comment_id>',loginCheck(AllComment.deleteComment), name="deleteComment"),
     
+    # Like & Unlike
+    path('post/like/<int:post_id>/',loginCheck(AllLike.like), name="likePost"),
+    path('post/unlike/<int:post_id>/',loginCheck(AllLike.unlike), name="unlikePost"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

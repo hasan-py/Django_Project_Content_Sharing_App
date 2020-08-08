@@ -7,12 +7,13 @@ Django CMS | View Post
 {% load custom %}
 
 <div class="container-fluid mb-3">
-    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
-        < Back
-    </button>
+    <a href="{% url 'home' %}" type="button" class="btn btn-primary mb-3">
+        < home
+    </a>
     <div class="card mb-5 border-0 shadow">
         <div class="card-header bg-warning border-0 text-light">
-           <h3>{{ post.title }} </h3> 
+           <div><span class="float-left"><h3>{{ post.title }}</h3></span> <span class="float-right">Posted by {{ post.user.name }}</span>
+           </div>
         </div>
         {% if messages %}
         {% for message in messages %}
@@ -26,13 +27,19 @@ Django CMS | View Post
         {% endif %}
         <div class="card-body">
             <img class="image-fluid mb-3" height="220px" width="280" src="{{ post.image.url }}" alt="{{ post.title }}">
-            <div class="col-md-6 offset-md-3">
-                <button type="button" class="btn btn-dark mb-2">
-                    Likes <span class="badge badge-light">{{ allLike|length }}</span>
-                </button>
-                <button type="button" class="btn btn-primary mb-2">
+            <div id="likeUnlike" class="col-md-6 offset-md-3">
+                {% if allLike|hasLike:request.session.loggedInUser.id %}
+                    <a href="{% url 'unlikePost' post_id=post.id %}" type="button" class="btn btn-dark mb-2">
+                        Unlike <span class="badge badge-light">{{ allLike|length }}</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'likePost' post_id=post.id %}" type="button" class="btn btn-dark mb-2">
+                        Like <span class="badge badge-light">{{ allLike|length }}</span>
+                    </a>
+                {% endif %}
+                <a href="#commentBox" type="button" class="btn btn-primary mb-2">
                     Comments <span class="badge badge-light">{{ allComment|length }}</span>
-                </button>
+                </a>
                 <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#exampleModalCenter">
                   <i class="fas fa-edit"></i> Edit Post
                 </button>
@@ -47,12 +54,28 @@ Django CMS | View Post
             <span class="float-left">Posted at {{ post.created_at }}</span>
             <span class="float-right">Last update on {{ post.updated_at }}</span>
         </div>
-         <div class="px-5 mt-5">
+         <div class="px-5 mt-2">
             <h4>Comments</h4>
             <hr>
+            <div id="commentBox" class="mb-3">
+                <form method="POST" action="{% url 'loggedInUserComment' %}#commentBox">
+                    {% csrf_token %}
+                    <input type="hidden" name="postId" value="{{ post.id }}">
+                    <div class="form-group">
+                        <label for="body">Your comment</label>
+                        <input name="body" type="text" class="form-control" id="body">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Comment</button>
+                </form>
+            </div>
             {% for comment in allComment %}
                 <div class="card col-md-6 mb-3">
                     <div class="card-title mt-3"><img style="border-radius:50%; height:50px; width:50px;" src="{{ comment.user.profile_pic.url }}" alt="profile_pic">  {{ comment.user.name }}
+
+                    {% if comment.user.id == request.session.loggedInUser.id %}
+                        <span class="float-right"><a href="{% url 'deleteComment' comment_id=comment.id post_id=post.id %}" class="btn btn-sm btn-danger">Delete</a></span>
+                    {% endif %}
+
                     </div>
                         <p class="text-muted">{{ comment.body }}</p>
                     <div class="card-footer bg-none border-0">

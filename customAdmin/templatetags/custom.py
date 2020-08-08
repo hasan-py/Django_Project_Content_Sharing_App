@@ -16,3 +16,9 @@ def countLC(dict,id):
 			newList.append(i.post.id)
 	return len(newList)
 	
+@register.filter(name='hasLike')
+def hasLike(allLike,loggedInUserId):
+	for like in allLike:
+		if like.user.id == loggedInUserId:
+			return True
+	return False
