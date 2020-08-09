@@ -27,3 +27,23 @@ class AllComment(View):
 		comment.delete()
 		messages.success(request, "Your comment deleted")
 		return redirect('allPostById',post_id)
+
+	def get(self,request):
+		allComment = Comment.objects.all().order_by("-id")
+		allUser = All_user.objects.all()
+		allPost = Post.objects.all()
+		context = {"allComment":allComment,"allUser":allUser,"allPost":allPost}
+		return render(request,"Comment/all-comment.html",context)
+
+	def post(self,request):
+		if request.method == "POST":
+			commentData = request.POST
+			newComment = Comment(
+					post = Post.objects.get(id=commentData["postId"]),
+					user = All_user.objects.get(id=commentData["postUser"]),
+					body = commentData["commentBody"],
+					updated_at = timezone.localtime(timezone.now())
+				)
+			newComment.save()
+			messages.success(request, "Your comment published")
+			return redirect('allComment')

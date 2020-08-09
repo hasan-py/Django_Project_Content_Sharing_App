@@ -16,7 +16,7 @@ class AllPost(View):
 		if request.GET.get('delete'):
 			self.deletePost(request,request.GET.get('delete'))
 
-		allPost = Post.objects.all()
+		allPost = Post.objects.all().order_by("-id")
 		allCategory = Category.objects.all()
 		allComment = Comment.objects.all()
 		allLike = Like.objects.all()
@@ -81,7 +81,7 @@ class AllPost(View):
 			return redirect('allPostById',post_id)
 
 		post = Post.objects.get(id=post_id)
-		allComment = Comment.objects.filter(post=post_id)
+		allComment = Comment.objects.filter(post=post_id).order_by("-id")
 		allLike = Like.objects.filter(post=post_id)
 		allCategory = Category.objects.all()
 		

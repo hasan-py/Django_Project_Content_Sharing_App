@@ -15,11 +15,11 @@ class Dashboard(View):
 
 class Home(View):
 	def get(self,request):
-		categories = Category.objects.all()
+		categories = Category.objects.all().order_by("name")
 		comments = Comment.objects.all()
 		likes = Like.objects.all()
 		if request.GET.get('category'):
-			filterPostById = Post.objects.filter(category=int(request.GET.get('category')))
+			filterPostById = Post.objects.filter(category=int(request.GET.get('category'))).order_by('-id')
 			return render(request, 'home.html',{
 				"posts":filterPostById,
 				"categories":categories,
@@ -28,7 +28,7 @@ class Home(View):
 				})
 
 		context = {
-			"posts": Post.objects.all(),
+			"posts": Post.objects.all().order_by('-id'),
 			"categories": categories,
 			"comments":comments,
 			"likes":likes

@@ -15,6 +15,10 @@ class AllLike(View):
 		return redirect('allPostById',post_id)
 
 	def unlike(request,post_id):
-		like = Like.objects.get(post=post_id,user=request.session.get("loggedInUser")["id"])
-		like.delete()
-		return redirect('allPostById',post_id)
+		loggedInUser = request.session.get("loggedInUser")["id"]
+		like = Like.objects.get(post=post_id,user=loggedInUser)
+		if Like.hasLike(post_id,loggedInUser):
+			like.delete()
+			return redirect('allPostById',post_id)
+		else:
+			return redirect('allPostById',post_id)

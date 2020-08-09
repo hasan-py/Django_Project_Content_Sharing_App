@@ -36,8 +36,10 @@ Django CMS | Home
                                 <br>
                                 <span class="badge badge-dark">#{{ post.category }}</span>
                                 <br>
-                                <span class="badge badge-danger">{{ likes|countLC:post.id }} Likes</span>
-                                <span class="badge badge-success">{{ comments|countLC:post.id }} Comments</span>
+                                <span class="badge badge-danger">{{ likes|countLC:post.id }} <i class="fas fa-thumbs-up"></i></span>
+                                <span class="badge badge-success">
+                                  {{ comments|countLC:post.id }} <i class="fas fa-comments"></i>
+                                </span>
                                 </p>
                                 <p class="card-text"><small class="text-muted">Published on {{ post.created_at }}</small></p>
                               </div>

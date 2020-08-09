@@ -10,3 +10,11 @@ class Like(models.Model):
 
 	def __str__(self):
 		return self.post.title
+
+
+	@staticmethod
+	def hasLike(postId,userId):
+		post = Like.objects.get(post=postId,user=userId)
+		if post:
+			return True
+		return False

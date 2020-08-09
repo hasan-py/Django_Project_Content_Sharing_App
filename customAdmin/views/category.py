@@ -12,7 +12,7 @@ class AllCategory(View):
 		if request.GET.get('delete'):
 			self.deleteCategory(request,request.GET.get('delete'))
 
-		allCategory = Category.objects.all()
+		allCategory = Category.objects.all().order_by("name")
 		return render(request,"Category/all-category.html",{"allCategory":allCategory})
 
 	# Add Category

@@ -7,9 +7,7 @@ from django.conf.urls.static import static
 # Views
 from .views import Dashboard,Login,Register,Logout,Home
 from .views import AllCategory,AllPost,AllComment,AllLike
-
-# Middlewares
-from .middlewares import loginCheck,logoutCheck
+from .middlewares import loginCheck,logoutCheck # Middlewares
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +30,7 @@ urlpatterns = [
     path('posts/<int:post_id>/', loginCheck(AllPost.updatePost), name="allPostById"),
 
     # Comment
+    path('allcomment', loginCheck(AllComment.as_view()), name="allComment"),
     path('comment',loginCheck(AllComment.loggedInUserComment), name="loggedInUserComment"),
     path('comment/delete/<int:post_id>/<int:comment_id>',loginCheck(AllComment.deleteComment), name="deleteComment"),
     
