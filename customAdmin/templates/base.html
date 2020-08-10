@@ -80,14 +80,9 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Users Screens:</h6>
+                        <a class="collapse-item" href="login.html">Users</a>
+                        <a class="collapse-item" href="login.html">Profile</a>
                     </div>
                 </div>
             </li>
@@ -309,6 +304,14 @@
     <!-- Page level custom scripts -->
     <script src="{% static './js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static './js/demo/chart-pie-demo.js' %}"></script>
+    
+      <!-- Page level plugins -->
+  <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
 </body>
 
 </html>

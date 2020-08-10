@@ -9,8 +9,20 @@ from customAdmin.models import All_user,Category,Post,Comment,Like
 class Dashboard(View):
 	DateTime = datetime.datetime.now()
 	def get(self,request):
+		allUser = (All_user.objects.all().count())
+		allCategory = (Category.objects.all().count())
+		allPost = (Post.objects.all().count())
+		allComment = (Comment.objects.all().count())
 		loggedInUser = All_user.objects.get(id=request.session.get('id'))
-		return render(request,"base.html",{"datetime":self.DateTime,"loggedInUser":loggedInUser})
+		context = {
+			"datetime":self.DateTime,
+			"loggedInUser":loggedInUser,
+			"allUser":allUser,
+			"allCategory":allCategory,
+			"allPost":allPost,
+			"allComment":allComment,
+		}
+		return render(request,"dashboard.html",context)
 
 
 class Home(View):

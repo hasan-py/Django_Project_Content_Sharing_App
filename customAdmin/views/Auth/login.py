@@ -22,7 +22,7 @@ class Login(View):
 					"profile_pic":userEmail.profile_pic.url,
 					"role":userEmail.role
 				}
-				return redirect('dashboard')
+				return redirect('home')
 			else:
 				messages.warning(request, "Email or password doesn't match")
 				return render(request,'Auth/login.html',{"loginData":loginData})

@@ -7,32 +7,30 @@ Django CMS | Posts
 {% block content %}
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
-        < Back
-    </button>
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header bg-warning py-3">
-            <h6 class="m-0 font-weight-bold text-light">Post Table</h6>
-        </div>
-        {% if messages %}
+    {% if messages %}
         {% for message in messages %}
-        <div class="mx-3 mt-3 alert alert-{{ message.tags }} warning alert-dismissible fade show" role="alert">
+        <div class="mx-3 mt-3 alert alert-{{ message.tags }} success alert-dismissible fade show" role="alert">
             <strong>{{ message }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         {% endfor %}
-        {% endif %}
-        <div class="col-md-6 mt-3">
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
-                + Add Post
-            </button>
+    {% endif %}
+    
+    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
+        <i style="color:white;" class="fas fa-arrow-left"></i> </button>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
         </div>
         <div class="card-body">
+        <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter">
+            + Add Post
+        </button>
             <div class="table-responsive">
-                <table class="table table-bordered table-responsive" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -48,6 +46,21 @@ Django CMS | Posts
                             <th>Actions</th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Slug</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Image</th>
+                            <th>Body</th>
+                            <th>Like total</th>
+                            <th>Comment total</th>
+                            <th>Last Update</th>
+                            <th>Created at</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
                     <tbody>
                         {% if allPost %}
                         {% for post in allPost %}
@@ -63,14 +76,16 @@ Django CMS | Posts
                             <td>{{ post.updated_at }}</td>
                             <td>{{ post.created_at }}</td>
                             <td>
-                               <a href="{% url 'allPostById' post_id=post.id %}" type="button" class="btn btn-warning m-1"> <i class="fas fa-eye"></i></a>
-                                <a href="{% url 'allPost' %}?delete={{ post.id }}" type="button" class="btn btn-danger m-1"> <i class="fas fa-trash"></i></a>
+                                <a href="{% url 'allPostById' post_id=post.id %}" type="button" class="btn btn-circle btn-warning m-1"> <i class="fas fa-eye"></i></a>
+                                <a href="{% url 'allPost' %}?delete={{ post.id }}" type="button" class="btn btn-circle btn-danger m-1"> <i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
                         {% else %}
                         <tr>
-                            <td colspan="10"><h3 class="text-center">No post found</h3></td>
+                            <td colspan="10">
+                                <h3 class="text-center">No post found</h3>
+                            </td>
                         </tr>
                         {% endif %}
                     </tbody>
@@ -78,8 +93,6 @@ Django CMS | Posts
             </div>
         </div>
     </div>
-</div>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -107,30 +120,29 @@ Django CMS | Posts
                     </div>
                     <div class="form-group">
                         <label for="postImage">Post Image</label>
-                        <input type="file" name="postImage"  class="form-control" id="postImage" required>
+                        <input type="file" name="postImage" class="form-control" id="postImage" required>
                     </div>
                     <div class="form-group">
-                      <label for="postCategory">Post Category</label>
+                        <label for="postCategory">Post Category</label>
                         <select required class="form-control" name="postCategory" id="postCategory">
-                          {% for category in allCategory %}
+                            {% for category in allCategory %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
-                          {% endfor %}
+                            {% endfor %}
                         </select>
-                    <div>
-                    <div class="form-group">
-                      <label for="postUser">Post User</label>
-                        <select required class="form-control" name="postUser" id="postUser">
-                          {% for user in allUser %}
-                            <option value="{{ user.id }}">{{ user.name }}</option>
-                          {% endfor %}
-                        </select>
-                    <div>
-                    <button type="submit" class="btn btn-warning mt-3">Submit Post</button>
-                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
+                        <div>
+                            <div class="form-group">
+                                <label for="postUser">Post User</label>
+                                <select required class="form-control" name="postUser" id="postUser">
+                                    {% for user in allUser %}
+                                    <option value="{{ user.id }}">{{ user.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div>
+                                    <button type="submit" class="btn btn-warning mt-3">Submit Post</button>
+                                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 {% endblock %}

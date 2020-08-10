@@ -8,7 +8,7 @@ Django CMS | View Post
 
 <div class="container-fluid mb-3">
     <a href="{% url 'home' %}" type="button" class="btn btn-primary mb-3">
-        < home
+        <i style="color:white;" class="fas fa-arrow-left"></i>
     </a>
     <div class="card mb-5 border-0 shadow">
         <div class="card-header bg-success border-0 text-light">
@@ -75,7 +75,7 @@ Django CMS | View Post
                     <div class="card-title mt-3"><img style="border-radius:50%; height:50px; width:50px;" src="{{ comment.user.profile_pic.url }}" alt="profile_pic">  {{ comment.user.name }}
 
                     {% if comment.user.id == request.session.loggedInUser.id %}
-                        <span class="float-right"><a href="{% url 'deleteComment' comment_id=comment.id post_id=post.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a></span>
+                        <span class="float-right"><a href="{% url 'deleteComment' comment_id=comment.id post_id=post.id %}" class="btn btn-circle btn-sm btn-danger"><i class="fas fa-trash"></i></a></span>
                     {% endif %}
 
                     </div>
