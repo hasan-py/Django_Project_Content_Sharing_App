@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | View Category
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid mb-3">
+    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
+      <i style="color:white;" class="fas fa-arrow-left"></i>
+    </button>
+<h3>Edit Category</h3>
+<hr>
+
+<form method="POST" action="{% url 'allCategoryById' cat_id=category.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="categoryName">Category Name</label>
+        <input name="categoryName" type="text" value="{{ category.name }}" class="form-control" id="categoryName" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+        <label for="categoryDiscription">Description</label>
+        <textarea class="form-control" name="categoryDiscription" id="categoryDiscription" cols="20" rows="5" placeholder="Discription here...">{{ category.description }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
+
+{% endblock %}

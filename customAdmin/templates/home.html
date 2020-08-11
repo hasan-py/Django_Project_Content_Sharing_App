@@ -36,7 +36,7 @@ Django CMS | Home
                                 <h5 class="card-title">{{ post.title }}</h5>
                                 <p class="card-text">{{ post.body|truncatechars:15 }} <a style="text-decoration:none" href="{% url 'allPostById' post_id=post.id %}">more</a>
                                 <br>
-                                Posted by <a href="#">{{ post.user }}</a>
+                                Posted by <a href="{% url 'profile' profile_id=post.user.id %}">{{ post.user }}</a>
                                 <br>
                                 <span class="badge badge-dark">#{{ post.category }}</span>
                                 <br>

@@ -18,3 +18,6 @@ from .comment import AllComment
 
 # Like
 from .like import AllLike
+
+#  Profile
+from .profile import Profile

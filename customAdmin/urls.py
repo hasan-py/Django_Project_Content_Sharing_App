@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Views
-from .views import Dashboard,Login,Register,Logout,Home
+from .views import Dashboard,Login,Register,Logout,Home,Profile
 from .views import AllCategory,AllPost,AllComment,AllLike
 from .middlewares import loginCheck,logoutCheck # Middlewares
 
@@ -37,5 +37,8 @@ urlpatterns = [
     # Like & Unlike
     path('post/like/<int:post_id>/',loginCheck(AllLike.like), name="likePost"),
     path('post/unlike/<int:post_id>/',loginCheck(AllLike.unlike), name="unlikePost"),
+
+    # Profile
+    path('/<int:profile_id>', loginCheck(Profile.viewProfile), name="profile"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

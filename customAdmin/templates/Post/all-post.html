@@ -23,7 +23,7 @@ Django CMS | Posts
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Posts</h6>
         </div>
         <div class="card-body">
         <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter">
@@ -68,7 +68,7 @@ Django CMS | Posts
                             <td>{{ post.title|truncatechars:17 }}</td>
                             <td>{{ post.slug|truncatechars:17 }}</td>
                             <td>{{ post.category }}</td>
-                            <td>{{ post.user }}</td>
+                            <td> <a href="{% url 'profile' profile_id=post.user.id %}">{{ post.user }}</a> </td>
                             <td><img class="image-fluid mb-3" height="50px" width="50px" src="{{ post.image.url }}" alt="{{ post.title }}"></td>
                             <td>{{ post.body|truncatechars:10 }}</td>
                             <td>{{ allLike|countLC:post.id }}</td>

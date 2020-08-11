@@ -25,7 +25,7 @@ Django CMS | Comments
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Comments</h6>
         </div>
         <div class="card-body">
             <button type="button" class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter">
@@ -40,7 +40,7 @@ Django CMS | Comments
                             <th>Author Name</th>
                             <th>Post Category</th>
                             <th>Post Image</th>
-                            <th>Comment</th>
+                            <th><strong>Comment</strong></th>
                             <th>Last Updated</th>
                             <th>Created at</th>
                             <th>Actions</th>
@@ -63,7 +63,7 @@ Django CMS | Comments
                         {% for comment in allComment %}
                         <tr>
                             <td>{{ comment.post.title|truncatechars:17 }}</td>
-                            <td>{{ comment.user.name }}</td>
+                            <td><a href="{% url 'profile' profile_id=comment.user.id %}">{{ comment.user.name }}</a></td>
                             <td>{{ comment.post.category }}</td>
                             <td><img class="image-fluid mb-3" height="50px" width="50px" src="{{ comment.post.image.url }}" alt="{{ comment.user.name }}"></td>
                             <td>{{ comment.body|truncatechars:15 }}</td>

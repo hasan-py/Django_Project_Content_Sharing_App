@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Profile
+{% endblock %}
+{% block content %}
+<div class="container-fluid">	
+<div class="twPc-div col-12 p-3">
+    <a class="twPc-bg twPc-block"></a>
+
+	<div>
+		<div class="twPc-button">
+            <a href="#" class="btn btn-info btn-sm">{{ user.role|capfirst }}</a> 
+		</div>
+		<a title="{{ user.name }}" href="{% url 'profile' profile_id=user.id %}" class="twPc-avatarLink">
+			<img alt="Profile_Pic" src="{{ user.profile_pic.url }}" class="twPc-avatarImg">
+		</a>
+		<div class="twPc-divUser">
+			<div class="twPc-divName">
+				<a href="{% url 'profile' profile_id=user.id %}">{{ user.name }}</a>
+			</div>
+			<span>
+				<a href="{% url 'profile' profile_id=user.id %}"><span>{{ user.email }}</span></a>
+			</span>
+		</div>
+
+		<div class="twPc-divStats">
+			<ul class="twPc-Arrange">
+				<li class="twPc-ArrangeSizeFit">
+					<a href="#">
+						<span class="twPc-StatLabel twPc-block">Posts</span>
+						<span class="twPc-StatValue">{{ posts|length }}</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="#">
+						<span class="twPc-StatLabel twPc-block">Comments</span>
+						<span class="twPc-StatValue">{{ comments|length }}</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="#">
+						<span class="twPc-StatLabel twPc-block">Friends</span>
+						<span class="twPc-StatValue">{{ likes|length }}</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="#">
+						<span class="twPc-StatLabel twPc-block">Request Friend</span>
+						<span class="twPc-StatValue">{{ likes|length }}</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a href="#">
+						<span class="twPc-StatLabel twPc-block">Find Friends</span>
+						<span class="twPc-StatValue">{{ likes|length }}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock%}
