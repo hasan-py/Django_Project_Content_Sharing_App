@@ -39,6 +39,6 @@ urlpatterns = [
     path('post/unlike/<int:post_id>/',loginCheck(AllLike.unlike), name="unlikePost"),
 
     # Profile
-    path('/<int:profile_id>', loginCheck(Profile.viewProfile), name="profile"),
+    path('<int:profile_id>', loginCheck(Profile.viewProfile), name="profile"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

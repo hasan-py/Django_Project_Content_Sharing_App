@@ -14,8 +14,6 @@ class Login(View):
 		userEmail = All_user.emailExist(loginData["email"])
 		if userEmail:
 			if check_password(loginData["password"],userEmail.password):
-				request.session["id"] = userEmail.id
-				request.session["name"] = userEmail.name
 				request.session["loggedInUser"] = {
 					"id":userEmail.id,
 					"name":userEmail.name,

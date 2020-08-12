@@ -45,15 +45,18 @@ class AllPost(View):
 				updated_at = timezone.localtime(timezone.now())
 			)
 		newPost.save()
+		if postData["loggedInUserPostSubmit"]:
+			return redirect("profile",profile_id=postData["postUser"])
+			
 		messages.success(request, "Post Published successfully. ")
 		return redirect('allPost')
 
 	# Delete Post
 	def deletePost(self,request,post_id):
 		post = Post.objects.get(id=post_id)
-		oldFIle = Path(os.getcwd()+"/customAdmin/"+f"{post.image}")
+		oldFile = Path(os.getcwd()+"/customAdmin/"+f"{post.image}")
 		post.delete()
-		os.remove(oldFIle)
+		os.remove(oldFile)
 		messages.success(request, f" '{post.title}' deleted successfully. ")
 		return redirect('allPost')
 
@@ -63,10 +66,10 @@ class AllPost(View):
 			editPost = Post.objects.get(id=post_id)
 			# Image Change Logic
 			if request.FILES.get('postImage'):
-				oldFIle = Path(os.getcwd()+"/customAdmin/"+f"{editPost.image}")
+				oldFile = Path(os.getcwd()+"/customAdmin/"+f"{editPost.image}")
 				editPost.image = request.FILES.get('postImage')
 				editPost.updated_at = timezone.localtime(timezone.now())
-				os.remove(oldFIle)
+				os.remove(oldFile)
 			# Without Image
 			if not request.FILES.get('postImage') or request.FILES.get('postImage'):
 				editPost.title = request.POST.get('postTitle')

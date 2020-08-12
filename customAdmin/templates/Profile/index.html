@@ -3,7 +3,9 @@
 {% block title %}
 Django CMS | Profile
 {% endblock %}
+{% load custom %}
 {% block content %}
+
 <div class="container-fluid">	
 <div class="twPc-div col-12 p-3">
     <a class="twPc-bg twPc-block"></a>
@@ -60,5 +62,117 @@ Django CMS | Profile
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	{% if request.session.loggedInUser.id == user.id %}
+	<div class="col-md-5 mt-3">
+		<h3>Edit Profile</h3>
+		<hr>
+		<form action="" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input value="{{ user.name }}" class="form-control" type="text" id="name" name="name">
+			</div>
+			<div class="form-group">
+				<label for="profile_pic">Change Profile Pic</label>
+				<input type="file" name="profile_pic" id="profile_pic" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-success btn-sm">Change Profile</button>
+			<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+            + Add Post
+        	</button>
+		</form>
+	</div>
+	{% endif %}
+	<div class="col-md-7 mt-3">
+		<div class="row">
+          {% if posts|length > 0 %}
+            {% for post in posts %}
+            <div class="col-md-12">
+                <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
+                  <div class="row no-gutters">
+                    <div class="col-md-4 m-3">
+                      <img src="{{ post.image.url }}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.body|truncatechars:15 }} <a style="text-decoration:none" href="{% url 'allPostById' post_id=post.id %}">more</a>
+                        <br>
+                        Posted by <a href="{% url 'profile' profile_id=post.user.id %}">{{ post.user }}</a>
+                        <br>
+                        <span class="badge badge-dark">#{{ post.category }}</span>
+                        <br>
+                        <span class="badge badge-danger">{{ likes|countLC:post.id }} <i class="fas fa-thumbs-up"></i></span>
+                        <span class="badge badge-success">
+                          {{ comments|countLC:post.id }} <i class="fas fa-comments"></i>
+                        </span>
+                        </p>
+                        <p class="card-text"><small class="text-muted">Published on {{ post.created_at }}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-md-12">
+               <h3 class="text-center">No post found</h3> 
+            </div>
+          {% endif %}
+        </div>
+	</div>
 </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-light">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'allPost' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="postTitle">Post Title</label>
+                        <input required value="{{ oldData.title }}" name="postTitle" type="text" class="form-control" id="postTitle" placeholder="Enter title">
+                    </div>
+                    <div class="form-group">
+                        <label for="postSlug">Post Slug</label>
+                        <input required value="{{ oldData.slug }}" name="postSlug" type="text" class="form-control" id="postSlug" placeholder="Enter slug">
+                    </div>
+                    <div class="form-group">
+                        <label for="postBody">Body</label>
+                        <textarea required class="form-control" name="postBody" id="postBody" cols="30" rows="5">{{ oldData.body }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postImage">Post Image</label>
+                        <input type="file" name="postImage" class="form-control" id="postImage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postCategory">Post Category</label>
+                        <select required class="form-control" name="postCategory" id="postCategory">
+                            {% for category in allCategory %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="hidden" value="{{ request.session.loggedInUser.id }}" name="postUser">
+                    <input type="hidden" name="loggedInUserPostSubmit" value="1">
+                    <div>
+	                    <button type="submit" class="btn btn-warning mt-3">Submit Post</button>
+	                    <button type="button" class="btn btn-danger mt-3" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock%}
