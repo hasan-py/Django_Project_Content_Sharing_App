@@ -21,3 +21,6 @@ from .like import AllLike
 
 #  Profile
 from .profile import Profile
+
+# Friend
+from .friend import Friends

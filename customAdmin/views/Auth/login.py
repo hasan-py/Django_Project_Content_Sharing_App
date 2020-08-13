@@ -14,12 +14,14 @@ class Login(View):
 		userEmail = All_user.emailExist(loginData["email"])
 		if userEmail:
 			if check_password(loginData["password"],userEmail.password):
+				request.session["id"] = userEmail.id
 				request.session["loggedInUser"] = {
 					"id":userEmail.id,
 					"name":userEmail.name,
 					"profile_pic":userEmail.profile_pic.url,
 					"role":userEmail.role
 				}
+				request.session.save()
 				return redirect('home')
 			else:
 				messages.warning(request, "Email or password doesn't match")

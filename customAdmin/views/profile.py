@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from django.utils import timezone
-from customAdmin.models import Post,Category,All_user,Comment,Like
+from customAdmin.models import Post,Category,All_user,Comment,Like,Friend
+from django.db.models import Q
 
 
 class Profile:
@@ -16,12 +17,17 @@ class Profile:
 		likes = Like.objects.filter(user=profile_id)
 		comments = Comment.objects.filter(user=profile_id)
 		allCategory = Category.objects.all()
+		friends = Friend.objects.filter(Q(receiver=profile_id, official=True) | Q(sender=profile_id, official=True))
+		friendReq = Friend.objects.filter(receiver=profile_id,official=False)
+		print(friends)
 		context = {
 			"user":user,
 			"posts":posts,
 			"likes":likes,
 			"comments":comments,
-			"allCategory":allCategory
+			"allCategory":allCategory,
+			"friends":friends,
+			"friendReq":friendReq
 		}
 
 		if request.method == "POST":
@@ -49,6 +55,7 @@ class Profile:
 
 			else:
 				user.name = name
+				user.save()
 				request.session["loggedInUser"]["name"] = user.name
 				request.session.save()
 				# request.session["loggedInUser"].profile_pic = user.profile_pic

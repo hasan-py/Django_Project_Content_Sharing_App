@@ -14,7 +14,7 @@ def logoutCheck(get_response):
 
 	def middleware(request):
 		if request.session.get('id'):
-			return redirect('dashboard')
+			return redirect('home')
 
 		return get_response(request)
 

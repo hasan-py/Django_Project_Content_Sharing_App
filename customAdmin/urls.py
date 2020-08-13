@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Views
-from .views import Dashboard,Login,Register,Logout,Home,Profile
+from .views import Dashboard,Login,Register,Logout,Home,Profile,Friends
 from .views import AllCategory,AllPost,AllComment,AllLike
 from .middlewares import loginCheck,logoutCheck # Middlewares
 
@@ -40,5 +40,8 @@ urlpatterns = [
 
     # Profile
     path('<int:profile_id>', loginCheck(Profile.viewProfile), name="profile"),
+
+    # Friends
+    path('<int:profile_id>/all-friend', loginCheck(Friends.allFriend), name="allFriend"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

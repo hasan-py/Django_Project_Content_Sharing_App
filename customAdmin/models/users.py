@@ -7,6 +7,7 @@ class All_user(models.Model):
 	password = models.CharField(max_length=255)
 	profile_pic = models.ImageField(upload_to='upload/profile_pic')
 	role = models.CharField(max_length=15)
+	verified = models.BooleanField(default=False)
 	created_at = models.DateField(default=datetime.datetime.today)
 	updated_at = models.DateField()
 

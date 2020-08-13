@@ -10,8 +10,6 @@ class Post(models.Model):
 	image = models.ImageField(upload_to='upload/post_image',default=True)
 	category = models.ForeignKey(Category,on_delete=models.CASCADE)
 	user = models.ForeignKey(All_user,on_delete=models.CASCADE)
-	comment_total = models.IntegerField(default=0)
-	like_total = models.IntegerField(default=0)
 	created_at = models.DateField(default=datetime.datetime.today)
 	updated_at = models.DateField()
 

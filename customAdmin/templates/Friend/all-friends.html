@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Profile
+{% endblock %}
+{% load custom %}
+{% block content %}
+
+<div class="container-fluid">	
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+              {% if allFriend|length > 0 %}
+                {% for friend in allFriend %}
+                {% if profile_id == friend.sender.id %}
+                    <div class="col-md-12">
+                        <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
+                          <div class="row no-gutters">
+                            <div class="col-md-4 m-3">
+                              <img style="height:150px" src="{{ friend.receiver.profile_pic.url }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card-body">
+                                <h5 class="card-title"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.receiver.id %}">{{ friend.receiver.name }} </a></h5>
+                                <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.receiver.id %}">{{ friend.receiver.email }} </a>
+                                <br>
+                                <p class="card-text"><small class="text-muted">Join on {{ friend.receiver.created_at }}</small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
+                          <div class="row no-gutters">
+                            <div class="col-md-4 m-3">
+                              <img style="height:150px" src="{{ friend.sender.profile_pic.url }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card-body">
+                                <h5 class="card-title"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.sender.id %}">{{ friend.sender.name }} </a></h5>
+                                <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.sender.id %}">{{ friend.sender.email }} </a>
+                                <br>
+                                <p class="card-text"><small class="text-muted">Join on {{ friend.sender.created_at }}</small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+              {% else %}
+                <div class="col-md-12">
+                   <h3 class="text-center">No Friend</h3> 
+                </div>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}

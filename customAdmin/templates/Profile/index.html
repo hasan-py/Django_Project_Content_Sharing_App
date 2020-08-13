@@ -26,40 +26,26 @@ Django CMS | Profile
 			</span>
 		</div>
 
-		<div class="twPc-divStats">
-			<ul class="twPc-Arrange">
-				<li class="twPc-ArrangeSizeFit">
-					<a href="#">
-						<span class="twPc-StatLabel twPc-block">Posts</span>
-						<span class="twPc-StatValue">{{ posts|length }}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a href="#">
-						<span class="twPc-StatLabel twPc-block">Comments</span>
-						<span class="twPc-StatValue">{{ comments|length }}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a href="#">
-						<span class="twPc-StatLabel twPc-block">Friends</span>
-						<span class="twPc-StatValue">{{ likes|length }}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a href="#">
-						<span class="twPc-StatLabel twPc-block">Request Friend</span>
-						<span class="twPc-StatValue">{{ likes|length }}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a href="#">
-						<span class="twPc-StatLabel twPc-block">Find Friends</span>
-						<span class="twPc-StatValue">{{ likes|length }}</span>
-					</a>
-				</li>
-			</ul>
-		</div>
+		<div class="row mt-2">
+            <div class="col-md-4">
+                <a href="#posts">
+                    <span class="twPc-StatLabel d-block">Total Posts</span>
+                    <span class="twPc-StatValue">{{ posts|length }}</span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'allFriend' profile_id=user.id %}">
+                    <span class="twPc-StatLabel twPc-block">Friends</span>
+                    <span class="twPc-StatValue">{{ friends|length }}</span>
+                </a>
+            </div>
+             <div class="col-md-4">
+                <a href="#">
+                    <span class="twPc-StatLabel twPc-block">Friend Request</span>
+                    <span class="twPc-StatValue">{{ friendReq|length }}</span>
+                </a>
+            </div>
+        </div>
 	</div>
 </div>
 
@@ -86,7 +72,7 @@ Django CMS | Profile
 	</div>
 	{% endif %}
 	<div class="col-md-7 mt-3">
-		<div class="row">
+		<div id="posts" class="row">
           {% if posts|length > 0 %}
             {% for post in posts %}
             <div class="col-md-12">
