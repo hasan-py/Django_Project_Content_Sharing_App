@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Friend Request
+{% endblock %}
+{% load custom %}
+{% block content %}
+
+<div class="container-fluid">	
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+              {% if reqs|length > 0 %}
+                {% for req in reqs %}
+                    <div class="col-md-12">
+                        <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
+                          <div class="row no-gutters">
+                            <div class="col-md-4 m-3">
+                              <img style="height:150px" src="{{ req.sender.profile_pic.url }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card-body">
+                                <h5 class="card-title"><a style="text-decoration:none" href="{% url 'profile' profile_id=req.sender.id %}">{{ req.sender.name }} </a></h5>
+                                <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=req.sender.id %}">{{ req.sender.email }} </a>
+                                <br>
+                                <p class="card-text"><small class="text-muted">Join on {{ req.sender.created_at }}</small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+              {% else %}
+                <div class="col-md-12">
+                   <h3 class="text-center">No Friend Request</h3> 
+                </div>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}

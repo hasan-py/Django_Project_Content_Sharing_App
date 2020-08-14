@@ -26,14 +26,17 @@ Django CMS | Users
         </div>
         <div class="card-body">
             <button type="button" class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter">
-            + Add Category
+            + Add User
             </button>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>Email</th>
+                            <th>Profile Pic</th>
+                            <th>Role</th>
+                            <th>Verified</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
@@ -42,30 +45,36 @@ Django CMS | Users
                     <tfoot>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>Email</th>
+                            <th>Profile Pic</th>
+                            <th>Role</th>
+                            <th>Verified</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        {% if allCategory %}
-                        {% for category in allCategory %}
+                        {% if allUser %}
+                        {% for user in allUser %}
                         <tr>
-                            <td>{{ category.name }}</td>
-                            <td>{{ category.description|truncatechars:10 }}</td>
-                            <td>{{ category.created_at }}</td>
-                            <td>{{ category.updated_at }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td><img height="60px" width="60px" src="{{ user.profile_pic.url }}" alt="profile_pic"></td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.verified }}</td>
+                            <td>{{ user.created_at }}</td>
+                            <td>{{ user.updated_at }}</td>
                             <td>
-                                <a href="{% url 'allCategoryById' cat_id=category.id %}" type="button" class="btn btn-circle btn-success"> <i class="fas fa-eye"></i></a>
-                                <a href="{% url 'allCategory' %}?delete={{ category.id }}" type="button" class="btn btn-circle btn-danger"> <i class="fas fa-trash"></i></a>
+                                <a href="#" type="button" class="btn btn-circle btn-success"> <i class="fas fa-eye"></i></a>
+                                <a href="#" type="button" class="btn btn-circle btn-danger"> <i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
                         {% else %}
                         <tr>
                             <td colspan="10">
-                                <h3 class="text-center">No category found</h3>
+                                <h3 class="text-center">No user found</h3>
                             </td>
                         </tr>
                         {% endif %}

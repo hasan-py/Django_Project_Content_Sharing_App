@@ -9,3 +9,8 @@ class Friends(View):
 	def allFriend(request,profile_id):
 		allFriend = Friend.objects.filter(Q(receiver=profile_id, official=True) | Q(sender=profile_id, official=True))
 		return render(request,"Friend/all-friends.html",{"allFriend":allFriend,"profile_id":profile_id})
+
+	def friendReq(request):
+		profile_id = request.session["loggedInUser"]["id"]
+		reqs = Friend.objects.filter(receiver=profile_id, official=False)
+		return render(request,"Friend/friends-req.html",{"reqs":reqs})

@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 # Views
 from .views import Dashboard,Login,Register,Logout,Home,Profile,Friends
-from .views import AllCategory,AllPost,AllComment,AllLike
+from .views import AllCategory,AllPost,AllComment,AllLike,AllUser
 from .middlewares import loginCheck,logoutCheck # Middlewares
 
 urlpatterns = [
@@ -34,6 +34,10 @@ urlpatterns = [
     path('comment',loginCheck(AllComment.loggedInUserComment), name="loggedInUserComment"),
     path('comment/delete/<int:post_id>/<int:comment_id>',loginCheck(AllComment.deleteComment), name="deleteComment"),
     
+    # User
+    path('users', loginCheck(AllUser.as_view()), name="allUser"),
+    # path('user/<int:user_id>/', loginCheck(AllUser.updateUser), name="allPostById"),
+
     # Like & Unlike
     path('post/like/<int:post_id>/',loginCheck(AllLike.like), name="likePost"),
     path('post/unlike/<int:post_id>/',loginCheck(AllLike.unlike), name="unlikePost"),
@@ -43,5 +47,6 @@ urlpatterns = [
 
     # Friends
     path('<int:profile_id>/all-friend', loginCheck(Friends.allFriend), name="allFriend"),
+    path('friend-request', loginCheck(Friends.friendReq), name="friendReq"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
