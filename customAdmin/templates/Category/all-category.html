@@ -31,7 +31,8 @@ Django CMS | Categories
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr>   
+                            <th>Select <input class="checkBoxs" name="" type="checkBox"></th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Created at</th>
@@ -41,6 +42,7 @@ Django CMS | Categories
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>Select</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Created at</th>
@@ -52,6 +54,7 @@ Django CMS | Categories
                         {% if allCategory %}
                         {% for category in allCategory %}
                         <tr>
+                            <td><input class="checkBox" value="{{ category.id }}" class="checkBoxs" name="checkBoxArray[]" type="checkBox"></td>
                             <td>{{ category.name }}</td>
                             <td>{{ category.description|truncatechars:10 }}</td>
                             <td>{{ category.created_at }}</td>
@@ -74,6 +77,13 @@ Django CMS | Categories
             </div>
         </div>
     </div>
+        
+        <form id="form" action="" method="POST">
+            {% csrf_token %}
+            <input type="text" value="Hasan" name="name">
+            <button id="btn" class="btn btn-block btn-primary">Click For Ajax Req</button>
+        </form>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -103,4 +113,54 @@ Django CMS | Categories
         </div>
     </div>
 </div>
-{% endblock %}
+
+<script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    const csrftoken = getCookie('csrftoken');
+
+    document.getElementById("form").addEventListener("submit", function(e){
+        e.preventDefault();
+        const data = "Hasan Mahmudul";
+
+        fetch('http://127.0.0.1:8000/like', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            // 'Content-Type': 'application/json',
+            'X-CSRFToken':csrftoken
+          },
+          body: JSON.stringify({
+            'username': data
+          })    
+        })
+        .then(response => response.json())
+        .then(data => {
+            data.posts = JSON.parse(data.posts)
+            for (let i=0; i<data.posts.length; i++){
+                console.log(data.posts[i]);
+            }
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+</script>
+
+
+{% endblock %} 
+

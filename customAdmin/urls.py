@@ -41,6 +41,7 @@ urlpatterns = [
     # Like & Unlike
     path('post/like/<int:post_id>/',loginCheck(AllLike.like), name="likePost"),
     path('post/unlike/<int:post_id>/',loginCheck(AllLike.unlike), name="unlikePost"),
+    path('like',loginCheck(AllLike.ajaxReq), name="ajaxReq"),
 
     # Profile
     path('<int:profile_id>', loginCheck(Profile.viewProfile), name="profile"),
