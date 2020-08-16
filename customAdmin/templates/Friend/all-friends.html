@@ -25,6 +25,11 @@ Django CMS | Profile
                                 <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.receiver.id %}">{{ friend.receiver.email }} </a>
                                 <br>
                                 <p class="card-text"><small class="text-muted">Join on {{ friend.receiver.created_at }}</small></p>
+                                <div>
+                                  
+                                    <a href="{% url 'profile' profile_id=friend.receiver.id %}" class="btn btn-success">View</a>
+                                  
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -43,6 +48,11 @@ Django CMS | Profile
                                 <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=friend.sender.id %}">{{ friend.sender.email }} </a>
                                 <br>
                                 <p class="card-text"><small class="text-muted">Join on {{ friend.sender.created_at }}</small></p>
+                                 {% if profile_id == request.session.loggedInUser.id %}
+                                    <button disabled class="btn btn-success">Friend</button>
+                                  {% else %}
+                                      <a href="{% url 'profile' profile_id=friend.sender.id %}" class="btn btn-success">View</a>
+                                  {% endif %}
                               </div>
                             </div>
                           </div>
