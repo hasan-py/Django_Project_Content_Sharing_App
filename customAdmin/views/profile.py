@@ -19,7 +19,10 @@ class Profile:
 		allCategory = Category.objects.all()
 		friends = Friend.objects.filter(Q(receiver=profile_id, official=True) | Q(sender=profile_id, official=True))
 		friendReq = Friend.objects.filter(receiver=profile_id,official=False)
-		print(friends)
+		allFriendFalse = Friend.objects.filter(Q(receiver=profile_id, official=False) | Q(sender=profile_id, official=False))
+
+		
+
 		context = {
 			"user":user,
 			"posts":posts,
@@ -27,7 +30,8 @@ class Profile:
 			"comments":comments,
 			"allCategory":allCategory,
 			"friends":friends,
-			"friendReq":friendReq
+			"friendReq":friendReq,
+			"allFriendFalse":allFriendFalse
 		}
 
 		if request.method == "POST":

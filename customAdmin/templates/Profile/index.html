@@ -49,6 +49,13 @@ Django CMS | Profile
             {% endif %}
         </div>
 	</div>
+    {% if request.session.loggedInUser.id != user.id %}
+        {% if friends|hasFriend:request.session.loggedInUser.id %}
+            <button class="btn btn-sm mt-3 btn-success">Friend</button>
+        {% else %}
+         <button class="btn btn-sm mt-3 btn-success">Add Friend</button>
+        {% endif %}
+    {% endif %}
 </div>
 
 <div class="row">

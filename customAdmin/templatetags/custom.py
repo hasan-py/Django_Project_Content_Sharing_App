@@ -22,3 +22,13 @@ def hasLike(allLike,loggedInUserId):
 		if like.user.id == loggedInUserId:
 			return True
 	return False
+
+
+@register.filter(name='hasFriend')
+def hasFriend(friendList,loggedInUserId):
+	for friend in friendList:
+		print(friend.receiver.id)
+		print(loggedInUserId)
+		if friend.receiver.id == loggedInUserId:
+			return True
+	return False
