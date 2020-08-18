@@ -16,10 +16,11 @@ urlpatterns = [
     path('login', logoutCheck(Login.as_view()) , name="login"),
     path('register', logoutCheck(Register.as_view()) , name="register"),
 
-    # Dashboard & logout
+    # Dashboard & logout & 404 Page
     path('', loginCheck(Dashboard.as_view()), name="dashboard"),
     path('home', loginCheck(Home.as_view()), name="home"),
     path('logout', loginCheck(Logout.as_view()), name="logout"),
+    path('404-not-found', Home.notFound, name="404"),
 
     # Category
     path('categories', loginCheck(AllCategory.as_view()), name="allCategory"),

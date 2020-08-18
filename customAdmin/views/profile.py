@@ -14,14 +14,15 @@ class Profile:
 	def viewProfile(request,profile_id):
 		user = All_user.objects.get(id=profile_id)
 		posts = Post.objects.filter(user=profile_id)
-		likes = Like.objects.filter(user=profile_id)
-		comments = Comment.objects.filter(user=profile_id)
+		likes = Like.objects.all()
+		comments = Comment.objects.all()
 		allCategory = Category.objects.all()
 		friends = Friend.objects.filter(Q(receiver=profile_id, official=True) | Q(sender=profile_id, official=True))
 		friendReq = Friend.objects.filter(receiver=profile_id,official=False)
 		allFriendFalse = Friend.objects.filter(Q(receiver=profile_id, official=False) | Q(sender=profile_id, official=False))
+		logedInUserReq = Friend.objects.filter(receiver=request.session["loggedInUser"]["id"],official=False)
+		loggedInUserSendReq = Friend.objects.filter(sender=request.session["loggedInUser"]["id"], official=False)
 
-		
 
 		context = {
 			"user":user,
@@ -31,7 +32,10 @@ class Profile:
 			"allCategory":allCategory,
 			"friends":friends,
 			"friendReq":friendReq,
-			"allFriendFalse":allFriendFalse
+			"allFriendFalse":allFriendFalse,
+			"logedInUserReq":logedInUserReq,
+			"loggedInUserSendReq":loggedInUserSendReq,
+			"profile_id":profile_id
 		}
 
 		if request.method == "POST":

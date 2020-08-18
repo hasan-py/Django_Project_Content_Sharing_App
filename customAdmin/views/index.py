@@ -46,3 +46,6 @@ class Home(View):
 			"likes":likes
 		}
 		return render(request, "home.html",context)
+
+	def notFound(request):
+		return render(request,"404.html")

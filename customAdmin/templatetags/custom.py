@@ -27,8 +27,13 @@ def hasLike(allLike,loggedInUserId):
 @register.filter(name='hasFriend')
 def hasFriend(friendList,loggedInUserId):
 	for friend in friendList:
-		print(friend.receiver.id)
-		print(loggedInUserId)
-		if friend.receiver.id == loggedInUserId:
+		if friend.receiver.id == loggedInUserId or friend.sender.id == loggedInUserId:
+			return True
+	return False
+
+@register.filter(name='loggedInUserReqFriend')
+def loggedInUserReqFriend(friendList,profile_id):
+	for friend in friendList:
+		if friend.sender.id == profile_id:
 			return True
 	return False
