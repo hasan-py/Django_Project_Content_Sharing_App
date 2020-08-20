@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import All_user,Category,Post,Comment,Like,Friend
+from .models import All_user,Category,Post,Comment,Like,Friend,Message
 from django.contrib.auth.models import User,Group
 
 # Unregister all buildin system
@@ -13,3 +13,4 @@ admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Like)
 admin.site.register(Friend)
+admin.site.register(Message)

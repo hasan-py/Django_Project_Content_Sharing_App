@@ -37,23 +37,29 @@ Django CMS | Profile
 		</div>
 
 		<div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="#posts">
                     <span class="twPc-StatLabel d-block">Total Posts</span>
                     <span class="twPc-StatValue">{{ posts|length }}</span>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="{% url 'allFriend' profile_id=user.id %}">
                     <span class="twPc-StatLabel twPc-block">Friends</span>
                     <span class="twPc-StatValue">{{ friends|length }}</span>
                 </a>
             </div>
             {% if request.session.loggedInUser.id == user.id %}
-             <div class="col-md-4">
+             <div class="col-md-3">
                 <a href="{% url 'friendReq' %}">
                     <span class="twPc-StatLabel twPc-block">Friend Request</span>
                     <span class="twPc-StatValue">{{ friendReq|length }}</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'friendReq' %}">
+                    <span class="twPc-StatLabel twPc-block">Request Send</span>
+                    <span class="twPc-StatValue">{{ loggedInUserSendReq|length }}</span>
                 </a>
             </div>
             {% endif %}

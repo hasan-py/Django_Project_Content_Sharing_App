@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.hashers import check_password
-from customAdmin.models import All_user
+from customAdmin.models import All_user,Friend
 from django.contrib import messages
 
 class Login(View):

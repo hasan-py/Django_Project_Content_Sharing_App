@@ -17,11 +17,23 @@ Django CMS | Friend Request
         </div>
         {% endfor %}
     {% endif %}	
+    <div>  
+      <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3 mt-3">
+        <i style="color:white;" class="fas fa-arrow-left"></i>
+      </button> Go Back
+      <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-danger mb-3 mt-3 ml-5">
+        <i style="color:white;" class="fas fa-users"></i>
+        Find Friend
+      </button>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <div class="row">
               {% if reqs|length > 0 %}
                 {% for req in reqs %}
+                    <h2>Friend Request</h2>
+                     <hr>
                     <div class="col-md-12">
                         <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
                           <div class="row no-gutters">
@@ -46,15 +58,47 @@ Django CMS | Friend Request
                 {% endfor %}
               {% else %}
                 <div class="col-md-12">
-                   <h3 class="text-center">No Friend Request</h3>
-                    <button type="button" onclick="function back(){window.history.back()}; back();" class="btn btn-primary mb-3">
-                        <i style="color:white;" class="fas fa-arrow-left"></i>
-                    </button> Go Back
+                   <h2 class="text-center">No Friend Request</h2>
                 </div>
               {% endif %}
             </div>
         </div>
+        <div class="col-md-6">
+          <div class="row">
+            {% if loggedInUserSendReq|length > 0 %}
+                {% for req in loggedInUserSendReq %}
+                    <h2>Request Sent</h2>
+                     <hr>
+                    <div class="col-md-12">
+                        <div class="card mb-3 border-left-dark shadow" style="max-width: 540px;" >
+                          <div class="row no-gutters">
+                            <div class="col-md-4 m-3">
+                              <img style="height:150px" src="{{ req.receiver.profile_pic.url }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card-body">
+                                <h5 class="card-title"><a style="text-decoration:none" href="{% url 'profile' profile_id=req.receiver.id %}">{{ req.receiver.name }} </a></h5>
+                                <p class="card-text"><a style="text-decoration:none" href="{% url 'profile' profile_id=req.receiver.id %}">{{ req.receiver.email }} </a>
+                                <br>
+                                <p class="card-text"><small class="text-muted">Join on {{ req.receiver.created_at }}</small></p>
+                                 <div>
+                                 <button disabled class="btn btn-info btn-sm">Request sent</button>
+                                 <a href="{% url 'friendReq' %}?cancel={{ req.receiver.id  }}&sender={{ request.session.loggedInUser.id }}" class="btn btn-sm btn-danger">Cancel</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+              {% else %}
+                <div class="col-md-12">
+                   <h2 class="text-center">No Sent Request</h2>
+                </div>
+              {% endif %}
+          </div>
+        </div>
     </div>
+
 </div>
 
 

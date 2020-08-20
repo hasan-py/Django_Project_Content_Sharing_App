@@ -15,6 +15,7 @@ class Friends(View):
 		try:
 			profile_id = request.session["loggedInUser"]["id"]
 			reqs = Friend.objects.filter(receiver=profile_id, official=False)
+			loggedInUserSendReq = Friend.objects.filter(sender=request.session["loggedInUser"]["id"], official=False)
 
 			if request.GET.get("sender") and request.GET.get("receiver"):
 				sender_id = request.GET.get("sender")
@@ -23,7 +24,7 @@ class Friends(View):
 				req.official = True
 				req.save()
 				messages.success(request,"Friend Request Accept")
-				return render(request,"Friend/friends-req.html",{"reqs":reqs})
+				return redirect("friendReq")
 
 			if request.GET.get("cancel"):
 				deleteId = request.GET.get("cancel")
@@ -31,7 +32,7 @@ class Friends(View):
 				delete = Friend.objects.get(receiver=deleteId,sender=senderId,official=False)
 				delete.delete() 
 				messages.success(request,"Friend Request Deleted")
-				return render(request,"Friend/friends-req.html",{"reqs":reqs})
+				return redirect("friendReq")
 
 			if request.GET.get("addFriend"):
 				senderId = request.GET.get("addFriend")
@@ -50,6 +51,6 @@ class Friends(View):
 					messages.success(request,"Friend request sent")
 					return redirect("profile",senderId)
 
-			return render(request,"Friend/friends-req.html",{"reqs":reqs})
+			return render(request,"Friend/friends-req.html",{"reqs":reqs,"loggedInUserSendReq":loggedInUserSendReq})
 		except:
 			return redirect("404")
