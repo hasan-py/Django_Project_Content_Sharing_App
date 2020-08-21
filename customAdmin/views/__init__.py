@@ -10,3 +10,4 @@ from .user import AllUser
 from .like import AllLike
 from .profile import Profile
 from .friend import Friends
+from .message import Message

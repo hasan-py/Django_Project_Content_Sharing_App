@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Inbox ({{ receiver.name }})
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="col-md-6 offset-md-3 card">
+        <div class="card-header">Message</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <img height="60px" width="50px" class="rounded-circle" src="{{ receiver.profile_pic.url }}" alt="">
+                </div>
+                <div class="col-md-6 ml-4 mt-3">
+                    <h5 class="text-semibold">{{ receiver.name }}</h5>
+                </div>
+                <div class="col-md-3 mt-3">
+                    <span class="badge badge-info">{{ receiver.role|capfirst }}</span>
+                </div>
+            </div>
+            <form id="msg-box" action="{% url 'addMessage' profile_id=receiver.id %}#msg-box" method="POST" class="mt-5">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Your message here..."></textarea>
+                    <button class="btn btn-sm btn-primary mt-1">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

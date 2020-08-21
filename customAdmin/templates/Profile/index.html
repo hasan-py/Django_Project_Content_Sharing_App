@@ -66,7 +66,7 @@ Django CMS | Profile
         </div>
 	</div>
     {% if request.session.loggedInUser.id != user.id %}
-        <button class="btn btn-sm mt-3 btn-primary">Message</button>
+        <a href="{% url 'addMessage' profile_id=user.id %}" class="btn btn-sm mt-3 btn-primary">Message</a>
         {% if friends|hasFriend:request.session.loggedInUser.id %}
             <button disabled class="btn btn-sm mt-3 btn-success">Friend</button>
         {% else %}

@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 from .views import Dashboard,Login,Register,Logout,Home,Profile,Friends
 from .views import AllCategory,AllPost,AllComment,AllLike,AllUser
 from .middlewares import loginCheck,logoutCheck # Middlewares
+from .views import Message
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,5 +51,8 @@ urlpatterns = [
     # Friends
     path('<int:profile_id>/all-friend', loginCheck(Friends.allFriend), name="allFriend"),
     path('friend-request', loginCheck(Friends.friendReq), name="friendReq"),
+
+    # Message
+    path('message/<int:profile_id>/', loginCheck(Message.as_view()), name="addMessage"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
