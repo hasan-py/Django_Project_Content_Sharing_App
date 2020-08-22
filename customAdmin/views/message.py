@@ -10,12 +10,23 @@ class Message(View):
 
 	def get(self,request,profile_id):
 		profile_details = All_user.objects.get(id=profile_id)
-		context = {"receiver":profile_details}
+		ownId = request.session["loggedInUser"]["id"]
+		allMessage = msg.objects.filter(Q(receiver=ownId,sender=profile_id) | Q(receiver=profile_id,sender=ownId)).order_by("-id")
+		context = {"receiver":profile_details,"allMessage":allMessage}
 		return render(request,"Message/add-message.html",context)
 
+
 	def post(self,request,profile_id):
+		messageBody = request.POST.get("message")
+		newMessage = msg(
+				sender=All_user.objects.get(id=request.session["loggedInUser"]["id"]),
+				receiver=All_user.objects.get(id=profile_id),
+				message=messageBody,
+			)
+		newMessage.save()
 		profile_details = All_user.objects.get(id=profile_id)
 		ownId = request.session["loggedInUser"]["id"]
-		allMessage = msg.objects.filter(Q(receiver=ownId,sender=profile_id) | Q(receiver=profile_id,sender=ownId))
+		allMessage = msg.objects.filter(Q(receiver=ownId,sender=profile_id) | Q(receiver=profile_id,sender=ownId)).order_by("-id")
 		context = {"receiver":profile_details,"allMessage":allMessage}
 		return render(request,"Message/view-message.html",context)
+

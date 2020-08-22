@@ -6,8 +6,10 @@ Django CMS | Inbox ({{ receiver.name }})
 {% block content %}
 
 <div class="container-fluid">
-    <div class="col-md-6 offset-md-3 card">
+    <div class="col-md-12 card">
         <div class="card-header">Message</div>
+                <button type="button" onclick="function back(){window.location.reload()}; back();" class="btn btn-dark my-3">
+            Refreash Chat</i> </button>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-1">
@@ -21,10 +23,10 @@ Django CMS | Inbox ({{ receiver.name }})
                 </div>
             </div>
             {% if allMessage|length > 0 %}
-            <div class="mt-5 overflow-auto p-2" style="height:400px">
+            <div class="mt-5 overflow-auto p-5" style="height:400px">
                 {% for msg in allMessage %}
                 {% if msg.sender.id != receiver.id %}
-                    <div class="row bg-success text-light rounded shadow mb-3">
+                    <div class="row bg-success text-light rounded shadow mb-5">
                         <div class="col-md-2 my-2">
                             <img height="60px" width="50px" class="rounded-circle" src="{{ msg.sender.profile_pic.url }}" alt="">
                         </div>
@@ -64,5 +66,11 @@ Django CMS | Inbox ({{ receiver.name }})
         </div>
     </div>
 </div>
+
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
 
 {% endblock%}
