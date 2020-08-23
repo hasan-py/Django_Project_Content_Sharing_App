@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Django CMS | Inbox | {{ receiver.name }}
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <h2>Chats</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        {% for msg in userMessages %}
+                           {% if msg.sender.id == request.session.loggedInUser.id %}
+                                <div class="col-md-2 mb-3">
+                                    <a href="{% url 'addMessage' profile_id=msg.receiver.id %}">
+                                        <img height="50px" src="{{ msg.receiver.profile_pic.url }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-md-10">
+                                    {% if not msg.seen %}
+                                        <strong>{{ msg.message|truncatechars:10 }} * </strong>
+                                    {% else %}
+                                        {{ msg.message }}
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="col-md-2 mb-3">
+                                    <a href="{% url 'addMessage' profile_id=msg.sender.id %}">
+                                        <img height="50px" src="{{ msg.sender.profile_pic.url }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-md-10">
+                                    {% if not msg.seen %}
+                                        <strong>{{ msg.message|truncatechars:10 }} * </strong>
+                                    {% else %}
+                                        {{ msg.message }}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+    
+{% endblock%}

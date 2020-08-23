@@ -136,7 +136,7 @@
                                 </form>
                             </div>
                         </li>
-                        <!-- Nav Item - Messages -->
+                        <!-- Nav Item - Friend -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link" href="{% url 'friendReq' %}" role="button">
                                 <i class="fas fa-users fa-fw"></i>
@@ -145,7 +145,7 @@
                         </li>
                          <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link" href="#" role="button">
+                            <a class="nav-link" href="{% url 'allMessage' %}" role="button">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages 
                                 <span class="badge badge-danger badge-counter">7</span> -->
@@ -269,6 +269,14 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+        
+    <script>
+    if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static './vendor/jquery/jquery.min.js' %}"></script>

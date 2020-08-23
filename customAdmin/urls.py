@@ -53,6 +53,7 @@ urlpatterns = [
     path('friend-request', loginCheck(Friends.friendReq), name="friendReq"),
 
     # Message
+    path('inbox', loginCheck(Message.allMessage), name="allMessage"),
     path('message/<int:profile_id>/', loginCheck(Message.as_view()), name="addMessage"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

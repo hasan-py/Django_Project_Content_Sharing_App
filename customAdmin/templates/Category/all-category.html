@@ -32,7 +32,6 @@ Django CMS | Categories
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>   
-                            <th>Select <input class="checkBoxs" name="" type="checkBox"></th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Created at</th>
@@ -42,7 +41,6 @@ Django CMS | Categories
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Select</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Created at</th>
@@ -54,7 +52,6 @@ Django CMS | Categories
                         {% if allCategory %}
                         {% for category in allCategory %}
                         <tr>
-                            <td><input class="checkBox" value="{{ category.id }}" class="checkBoxs" name="checkBoxArray[]" type="checkBox"></td>
                             <td>{{ category.name }}</td>
                             <td>{{ category.description|truncatechars:10 }}</td>
                             <td>{{ category.created_at }}</td>
@@ -77,12 +74,6 @@ Django CMS | Categories
             </div>
         </div>
     </div>
-        
-        <form id="form" action="" method="POST">
-            {% csrf_token %}
-            <input type="text" value="Hasan" name="name">
-            <button id="btn" class="btn btn-block btn-primary">Click For Ajax Req</button>
-        </form>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
