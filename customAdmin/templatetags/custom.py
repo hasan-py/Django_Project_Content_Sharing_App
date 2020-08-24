@@ -37,3 +37,9 @@ def loggedInUserReqFriend(friendList,profile_id):
 		if friend.sender.id == profile_id:
 			return True
 	return False
+
+
+@register.filter(name='messageFilter')
+def messageFilter(msgObj):
+	mList = []
+	

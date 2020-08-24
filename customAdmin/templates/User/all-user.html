@@ -66,8 +66,8 @@ Django CMS | Users
                             <td>{{ user.created_at }}</td>
                             <td>{{ user.updated_at }}</td>
                             <td>
-                                <a href="#" type="button" class="btn btn-circle btn-success"> <i class="fas fa-eye"></i></a>
-                                <a href="#" type="button" class="btn btn-circle btn-danger"> <i class="fas fa-trash"></i></a>
+                                <a href="{% url 'profile' profile_id=user.id %}" type="button" class="btn btn-circle btn-success"> <i class="fas fa-eye"></i></a>
+                                <a href="{% url 'allUser' %}?delete={{ user.id }}" type="button" class="btn btn-circle btn-danger"> <i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         {% endfor %}

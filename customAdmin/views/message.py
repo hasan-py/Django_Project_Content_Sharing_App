@@ -36,19 +36,15 @@ class Message(View):
 	def allMessage(request):
 		ownId = request.session["loggedInUser"]["id"]
 		profile_details = All_user.objects.get(id=ownId)
-		userMessages = msg.objects.last()
-		# mList = []
-		# for i in userMessages:
-		# 	if not i.receiver.id == ownId:
-		# 		if not i.receiver.id in mList:
-		# 			mList.append(i.receiver.id)
-		# 	if not i.sender.id == ownId:
-		# 		if not i.sender.id in mList:
-		# 			mList.append(i.sender.id)
-			
-
-
-		# mainMessage = msg.objects.filter(Q(sender__in=mList,receiver=ownId) | Q(receiver__in=mList,sender=ownId))
-		# print(mainMessage)
-		context = {"receiver":profile_details,"userMessages":userMessages}
+		userMessages = msg.objects.filter(Q(receiver=ownId) | Q(sender=ownId)).order_by("-id")
+		chatList = []
+		for i in userMessages:
+			if not i.sender.id == ownId:
+				if not i.sender.id in chatList:
+					chatList.append(i.sender.id)
+			if not i.receiver.id == ownId:
+				if not i.receiver.id in chatList:
+					chatList.append(i.receiver.id)
+		print(chatList)
+		context = {"receiver":profile_details,"userMessages":userMessages,"chatList":chatList}
 		return render(request,"Message/all-message.html",context)
