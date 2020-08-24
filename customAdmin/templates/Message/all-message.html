@@ -15,12 +15,12 @@ Django CMS | Inbox | {{ receiver.name }}
                     <div class="row">
                         {% for msg in userMessages %}
                            {% if msg.sender.id == request.session.loggedInUser.id %}
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <a href="{% url 'addMessage' profile_id=msg.receiver.id %}">
                                         <img height="50px" src="{{ msg.receiver.profile_pic.url }}" alt="">
                                     </a>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-8">
                                     {% if not msg.seen %}
                                         <strong>{{ msg.message|truncatechars:10 }} * </strong>
                                     {% else %}
@@ -28,12 +28,12 @@ Django CMS | Inbox | {{ receiver.name }}
                                     {% endif %}
                                 </div>
                             {% else %}
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <a href="{% url 'addMessage' profile_id=msg.sender.id %}">
                                         <img height="50px" src="{{ msg.sender.profile_pic.url }}" alt="">
                                     </a>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-8">
                                     {% if not msg.seen %}
                                         <strong>{{ msg.message|truncatechars:10 }} * </strong>
                                     {% else %}

@@ -13,7 +13,8 @@ class Message(View):
 		ownId = request.session["loggedInUser"]["id"]
 		allMessage = msg.objects.filter(Q(receiver=ownId,sender=profile_id) | Q(receiver=profile_id,sender=ownId)).order_by("-id")
 		receiverMsg = msg.objects.filter(sender=profile_id,receiver=ownId)
-		print(receiverMsg)
+		if receiverMsg:
+			receiverMsg.update(seen=True)
 		context = {"receiver":profile_details,"allMessage":allMessage}
 		return render(request,"Message/add-message.html",context)
 
@@ -35,6 +36,19 @@ class Message(View):
 	def allMessage(request):
 		ownId = request.session["loggedInUser"]["id"]
 		profile_details = All_user.objects.get(id=ownId)
-		userMessages = msg.objects.filter(Q(receiver=ownId) | Q(sender=ownId)).order_by("-id")
+		userMessages = msg.objects.last()
+		# mList = []
+		# for i in userMessages:
+		# 	if not i.receiver.id == ownId:
+		# 		if not i.receiver.id in mList:
+		# 			mList.append(i.receiver.id)
+		# 	if not i.sender.id == ownId:
+		# 		if not i.sender.id in mList:
+		# 			mList.append(i.sender.id)
+			
+
+
+		# mainMessage = msg.objects.filter(Q(sender__in=mList,receiver=ownId) | Q(receiver__in=mList,sender=ownId))
+		# print(mainMessage)
 		context = {"receiver":profile_details,"userMessages":userMessages}
 		return render(request,"Message/all-message.html",context)
