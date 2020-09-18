@@ -37,14 +37,16 @@ class Message(View):
 		ownId = request.session["loggedInUser"]["id"]
 		profile_details = All_user.objects.get(id=ownId)
 		userMessages = msg.objects.filter(Q(receiver=ownId) | Q(sender=ownId)).order_by("-id")
-		chatList = []
+		
+		distinctUserId, dUser = [], []
 		for i in userMessages:
-			if not i.sender.id == ownId:
-				if not i.sender.id in chatList:
-					chatList.append(i.sender.id)
-			if not i.receiver.id == ownId:
-				if not i.receiver.id in chatList:
-					chatList.append(i.receiver.id)
-		print(chatList)
-		context = {"receiver":profile_details,"userMessages":userMessages,"chatList":chatList}
+			if i.receiver not in distinctUserId:
+				if i.sender != request.session["loggedInUser"]["id"]:
+					distinctUserId.append(i.receiver)
+					dUser.append(i)
+
+		print(dUser)
+		print(distinctUserId)
+
+		context = {"receiver":profile_details,"userMessages":dUser}
 		return render(request,"Message/all-message.html",context)

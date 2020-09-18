@@ -11,19 +11,32 @@ Django CMS | Inbox | {{ receiver.name }}
     <hr>
     <div class="row">
     {% for msg in userMessages %}
-        {% if msg.sender.id != request.session.loggedInUser.id %} 
+        {% if msg.sender.id == request.session.loggedInUser.id or msg.receiver.id == request.session.loggedInUser.id %}
         <div class="col-md-12 mb-1">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-1 mb-3">
-                            <img height="50px" width="50px" class="rounded-circle" src="{{ msg.sender.profile_pic.url }}" alt="">
+                            {% if msg.sender.id == request.session.loggedInUser.id %}
+                                <img height="50px" width="50px" class="rounded-circle" src="{{ msg.receiver.profile_pic.url }}" alt="">
+                            {% else %}
+                                <img height="50px" width="50px" class="rounded-circle" src="{{ msg.sender.profile_pic.url }}" alt="">
+                            {% endif %}
                         </div>
                         <div class="col-md-11 mt-2">
-                           {{ msg.sender.name }}
+                            {% if msg.sender.id == request.session.loggedInUser.id %}
+                                {{ msg.receiver.name }}
+                            {% else %}
+                                 {{ msg.sender.name }}
+                            {% endif %}
                            <br>
-                           <a href="{% url 'profile' profile_id=msg.sender.id %}" class="btn btn-sm btn-dark">Profile</a>
-                           <a href="{% url 'addMessage' profile_id=msg.sender.id %}" class="btn btn-sm btn-success">Chat</a>
+                            {% if msg.sender.id == request.session.loggedInUser.id %}
+                            <a href="{% url 'profile' profile_id=msg.receiver.id %}" class="btn btn-sm btn-dark">Profile</a>
+                           <a href="{% url 'addMessage' profile_id=msg.receiver.id %}" class="btn btn-sm btn-success">Chat</a>
+                            {% else %}  
+                               <a href="{% url 'profile' profile_id=msg.sender.id %}" class="btn btn-sm btn-dark">Profile</a>
+                               <a href="{% url 'addMessage' profile_id=msg.sender.id %}" class="btn btn-sm btn-success">Chat</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
